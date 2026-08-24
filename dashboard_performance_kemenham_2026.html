@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kemenham Contact Center Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  color-scheme: light;
+  --paper: #ffffff;
+  --paper-2: #f4f7fb;
+  --paper-3: #eaf1f9;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --border: rgba(13,42,82,0.10);
+  --border-strong: rgba(13,42,82,0.18);
+  --ink-1: #0b2038;
+  --ink-2: #45566f;
+  --ink-3: #7c8aa0;
+  --shadow-sm: 0 1px 2px rgba(15,42,82,0.06), 0 1px 1px rgba(15,42,82,0.04);
+  --shadow-md: 0 8px 22px rgba(15,42,82,0.09), 0 2px 6px rgba(15,42,82,0.05);
+  --shadow-lg: 0 18px 44px rgba(15,42,82,0.13), 0 4px 12px rgba(15,42,82,0.06);
+
+  --navy: #0b2a52;
+  --navy-2: #123a6e;
+  --brand: #2a78d6;
+  --brand-2: #1c5cab;
+  --sky: #4a9fe8;
+  --cyan: #38bdf8;
+  --cyan-soft: #e3f4fd;
+  --gold: #c9a11e;
+  --gold-soft: #f7efd6;
+
+  --c-email: #c9591e;
+  --c-whatsapp: #1f9d63;
+  --c-voice: #2a78d6;
+
+  --good: #0ca35e;
+  --good-bg: #e4f7ee;
+  --warning: #c98600;
+  --warning-bg: #fbf0da;
+  --serious: #d9622f;
+  --serious-bg: #fce9de;
+  --critical: #d0393b;
+  --critical-bg: #fbe6e6;
+  --info: #2a78d6;
+  --info-bg: #e8f1fc;
+
+  --font-display: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper: #081527;
+    --paper-2: #0b1a2f;
+    --paper-3: #0f2138;
+    --surface: #0e1f38;
+    --surface-raised: #112441;
+    --border: rgba(150,182,222,0.14);
+    --border-strong: rgba(150,182,222,0.24);
+    --ink-1: #f1f6fc;
+    --ink-2: #b6c5dd;
+    --ink-3: #7e91b1;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
+    --shadow-md: 0 8px 22px rgba(0,0,0,0.38);
+    --shadow-lg: 0 22px 50px rgba(0,0,0,0.5);
+    --navy: #16305a;
+    --navy-2: #1c3f74;
+    --brand: #4e93e6;
+    --brand-2: #6aabf0;
+    --sky: #5aa6ec;
+    --cyan: #38bdf8;
+    --cyan-soft: rgba(56,189,248,0.14);
+    --gold: #e2bf4c;
+    --gold-soft: rgba(226,191,76,0.14);
+    --c-email: #cf7038;
+    --c-whatsapp: #28a06e;
+    --c-voice: #4f97e3;
+    --good: #2fd18a;
+    --good-bg: rgba(47,209,138,0.15);
+    --warning: #f0b429;
+    --warning-bg: rgba(240,180,41,0.15);
+    --serious: #ef8a5c;
+    --serious-bg: rgba(239,138,92,0.15);
+    --critical: #ec6b6b;
+    --critical-bg: rgba(236,107,107,0.16);
+    --info: #4e93e6;
+    --info-bg: rgba(78,147,230,0.15);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper: #081527;
+  --paper-2: #0b1a2f;
+  --paper-3: #0f2138;
+  --surface: #0e1f38;
+  --surface-raised: #112441;
+  --border: rgba(150,182,222,0.14);
+  --border-strong: rgba(150,182,222,0.24);
+  --ink-1: #f1f6fc;
+  --ink-2: #b6c5dd;
+  --ink-3: #7e91b1;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
+  --shadow-md: 0 8px 22px rgba(0,0,0,0.38);
+  --shadow-lg: 0 22px 50px rgba(0,0,0,0.5);
+  --navy: #16305a;
+  --navy-2: #1c3f74;
+  --brand: #4e93e6;
+  --brand-2: #6aabf0;
+  --sky: #5aa6ec;
+  --cyan: #38bdf8;
+  --cyan-soft: rgba(56,189,248,0.14);
+  --gold: #e2bf4c;
+  --gold-soft: rgba(226,191,76,0.14);
+  --c-email: #e88a55;
+  --c-whatsapp: #35c98a;
+  --c-voice: #4e93e6;
+  --good: #2fd18a;
+  --good-bg: rgba(47,209,138,0.15);
+  --warning: #f0b429;
+  --warning-bg: rgba(240,180,41,0.15);
+  --serious: #ef8a5c;
+  --serious-bg: rgba(239,138,92,0.15);
+  --critical: #ec6b6b;
+  --critical-bg: rgba(236,107,107,0.16);
+  --info: #4e93e6;
+  --info-bg: rgba(78,147,230,0.15);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper-2);
+  color:var(--ink-1);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+::selection{background:var(--cyan-soft);}
+a{color:var(--brand);}
+.tnum{font-variant-numeric:tabular-nums;}
+svg text{font-family:var(--font-body);}
+
+.app{max-width:1720px;margin:0 auto;padding:0 26px 60px;}
+
+/* ---------- Topbar ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.topbar-inner{max-width:1720px;margin:0 auto;padding:14px 26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:13px;min-width:300px;}
+.brand-logo{width:44px;height:44px;border-radius:10px;object-fit:contain;background:var(--navy);padding:4px;box-shadow:var(--shadow-sm);flex:none;}
+.brand-text h1{font-family:var(--font-display);font-weight:800;font-size:16.5px;letter-spacing:-0.01em;margin:0;color:var(--ink-1);line-height:1.25;}
+.brand-text p{margin:1px 0 0;font-size:11.3px;color:var(--ink-3);font-weight:500;letter-spacing:.01em;}
+
+.meta-strip{display:flex;gap:0;align-items:center;flex-wrap:wrap;margin-left:6px;font-size:12px;color:var(--ink-2);}
+.meta-item{display:flex;flex-direction:column;gap:1px;padding:0 15px;border-left:1px solid var(--border);}
+.meta-item:first-child{border-left:none;}
+.meta-item .k{font-size:9.3px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);font-weight:700;}
+.meta-item .v{font-weight:700;color:var(--ink-1);font-size:12.3px;}
+
+.topbar-controls{display:flex;align-items:center;gap:10px;margin-left:auto;flex-wrap:wrap;}
+.icon-btn{appearance:none;border:1px solid var(--border);background:var(--paper-3);color:var(--ink-1);width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s ease;flex:none;}
+.icon-btn:hover{border-color:var(--border-strong);}
+.icon-btn:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;}
+.icon-btn svg{width:18px;height:18px;}
+
+.filterbar{max-width:1720px;margin:0 auto;padding:11px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:var(--paper);}
+.filterbar .flabel{font-size:10.5px;font-weight:800;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;margin-right:2px;}
+.seg{display:inline-flex;background:var(--paper-3);border:1px solid var(--border);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap;}
+.seg button{appearance:none;border:none;background:transparent;color:var(--ink-2);font-family:var(--font-body);font-weight:700;font-size:12px;padding:6px 12px;border-radius:7px;cursor:pointer;transition:background .15s ease,color .15s ease;white-space:nowrap;}
+.seg button:hover{color:var(--ink-1);}
+.seg button.active{background:var(--brand);color:#fff;box-shadow:var(--shadow-sm);}
+.seg button:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;}
+.seg.seg-sm button{padding:5px 10px;font-size:11.3px;}
+.filter-hint{font-size:11.3px;color:var(--ink-3);margin-left:2px;}
+.filter-spacer{flex:1;}
+.as-of{font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px;font-weight:600;}
+.as-of b{color:var(--ink-1);}
+
+/* ---------- Section shell ---------- */
+.section{margin-top:28px;}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap;}
+.section-head h2{font-family:var(--font-display);font-weight:800;font-size:14.5px;letter-spacing:.045em;text-transform:uppercase;color:var(--navy);margin:0;display:flex;align-items:center;gap:9px;}
+:root[data-theme="dark"] .section-head h2{color:var(--ink-1);}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .section-head h2{color:var(--ink-1);}}
+.section-head .bar{width:4px;height:15px;background:var(--brand);border-radius:3px;}
+.section-head .desc{font-size:11.8px;color:var(--ink-3);margin:0;}
+
+.grid{display:grid;gap:16px;}
+.cols-2{grid-template-columns:1fr 1fr;}
+.cols-3{grid-template-columns:repeat(3,1fr);}
+.cols-4{grid-template-columns:repeat(4,1fr);}
+.cols-5{grid-template-columns:repeat(5,1fr);}
+.cols-6{grid-template-columns:repeat(6,1fr);}
+.cols-12{grid-template-columns:repeat(12,1fr);}
+
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm);padding:17px 19px;}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;}
+.panel-title{font-family:var(--font-display);font-weight:700;font-size:12.8px;color:var(--ink-1);margin:0;}
+.panel-sub{font-size:11px;color:var(--ink-3);margin:2px 0 0;}
+.panel-tag{font-size:9.8px;font-weight:800;padding:3px 8px;border-radius:99px;background:var(--paper-3);color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;}
+
+/* ---------- KPI cards ---------- */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+.kpi-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px 15px 13px;box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow .15s ease,transform .15s ease;}
+.kpi-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,var(--brand));}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.kpi-label{font-size:10.6px;font-weight:800;color:var(--ink-2);text-transform:uppercase;letter-spacing:.03em;line-height:1.3;}
+.kpi-pill{flex:none;font-size:9.2px;font-weight:800;padding:3px 7px;border-radius:99px;letter-spacing:.02em;background:var(--pillbg,var(--info-bg));color:var(--pillfg,var(--info));white-space:nowrap;}
+.kpi-value{font-family:var(--font-display);font-weight:800;font-size:25px;color:var(--ink-1);margin:7px 0 1px;letter-spacing:-0.01em;}
+.kpi-value .unit{font-size:13px;font-weight:700;color:var(--ink-3);margin-left:2px;}
+.kpi-meta{display:flex;align-items:center;gap:9px;font-size:10.7px;color:var(--ink-3);margin-top:5px;flex-wrap:wrap;}
+.kpi-meta b{color:var(--ink-2);font-weight:700;}
+.kpi-bar{height:5px;border-radius:99px;background:var(--paper-3);margin-top:9px;overflow:hidden;}
+.kpi-bar>i{display:block;height:100%;border-radius:99px;background:var(--accent,var(--brand));}
+.kpi-trend{display:inline-flex;align-items:center;gap:3px;font-weight:800;font-size:10.7px;}
+.trend-up{color:var(--good);}
+.trend-down{color:var(--critical);}
+.trend-flat{color:var(--ink-3);}
+
+/* ---------- Stat tiles ---------- */
+.stat-tile{background:var(--paper-3);border:1px solid var(--border);border-radius:12px;padding:11px 13px;}
+.stat-tile .k{font-size:9.7px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);}
+.stat-tile .v{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--ink-1);margin-top:4px;}
+.stat-tile .d{font-size:10.7px;margin-top:3px;color:var(--ink-3);}
+
+/* ---------- Gauge ---------- */
+.gauge-block{display:flex;flex-direction:column;align-items:center;text-align:center;}
+.gauge-num{font-family:var(--font-display);font-weight:800;font-size:36px;color:var(--ink-1);}
+.gauge-status{font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:4px 14px;border-radius:99px;margin-top:8px;}
+
+/* ---------- Bullet / progress rows ---------- */
+.bullet-row{padding:12px 0;border-bottom:1px solid var(--border);}
+.bullet-row:last-child{border-bottom:none;padding-bottom:2px;}
+.bullet-head{display:flex;justify-content:space-between;align-items:baseline;font-size:12.3px;margin-bottom:7px;flex-wrap:wrap;gap:6px;}
+.bullet-head .name{font-weight:700;color:var(--ink-1);}
+.bullet-head .figs{color:var(--ink-3);font-size:11.3px;}
+.bullet-head .figs b{color:var(--ink-1);}
+.bullet-track{position:relative;height:10px;background:var(--paper-3);border-radius:99px;}
+.bullet-fill{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--brand);}
+.bullet-target{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink-1);opacity:.55;}
+.bullet-gap{font-size:10.8px;font-weight:800;margin-top:5px;}
+
+/* ---------- Legend ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:11px;margin-top:10px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11.3px;color:var(--ink-2);font-weight:600;}
+.legend-dot{width:9px;height:9px;border-radius:3px;flex:none;}
+
+/* ---------- Alerts ---------- */
+.alert-list{display:flex;flex-direction:column;gap:8px;}
+.alert-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:var(--paper-3);}
+.alert-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:none;}
+.alert-text b{color:var(--ink-1);}
+.alert-text{font-size:12.3px;color:var(--ink-2);line-height:1.45;}
+.alert-text .tag{display:inline-block;font-size:9.3px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:1px;}
+
+/* ---------- Insights / actions ---------- */
+.insight-card{display:flex;gap:12px;padding:13px 14px;border-radius:12px;background:var(--paper-3);border:1px solid var(--border);}
+.insight-num{font-family:var(--font-display);font-weight:800;font-size:14.5px;color:var(--brand);flex:none;width:24px;}
+.insight-card p{margin:0;font-size:12.5px;line-height:1.55;color:var(--ink-2);}
+.insight-card p b{color:var(--ink-1);}
+
+/* ---------- Agent rank ---------- */
+.agent-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.agent-row:last-child{border-bottom:none;}
+.agent-rank{width:20px;height:20px;border-radius:6px;background:var(--paper-3);display:flex;align-items:center;justify-content:center;font-size:10.2px;font-weight:800;color:var(--ink-2);flex:none;}
+.agent-info{flex:1;min-width:0;}
+.agent-name{font-size:12.2px;font-weight:700;color:var(--ink-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.agent-role{font-size:10.3px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.agent-bar-wrap{flex:1;background:var(--paper-3);height:7px;border-radius:99px;overflow:hidden;max-width:110px;}
+.agent-bar{height:100%;border-radius:99px;}
+.agent-val{font-size:11.3px;font-weight:800;color:var(--ink-2);width:40px;text-align:right;flex:none;}
+
+.table-scroll{overflow-x:auto;}
+table.dtable{width:100%;border-collapse:collapse;font-size:11.8px;}
+table.dtable th{text-align:left;font-size:9.8px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);padding:6px 10px;border-bottom:1px solid var(--border-strong);white-space:nowrap;}
+table.dtable td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--ink-2);white-space:nowrap;}
+table.dtable tr:last-child td{border-bottom:none;}
+table.dtable td.strong{color:var(--ink-1);font-weight:700;}
+
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:10.3px;font-weight:700;padding:3px 9px;border-radius:99px;}
+.badge.good{background:var(--good-bg);color:var(--good);}
+.badge.warning{background:var(--warning-bg);color:var(--warning);}
+.badge.serious{background:var(--serious-bg);color:var(--serious);}
+.badge.critical{background:var(--critical-bg);color:var(--critical);}
+.badge.info{background:var(--info-bg);color:var(--info);}
+
+canvas{width:100%;max-width:100%;display:block;}
+.chart-wrap{position:relative;}
+.chart-tooltip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:7px 10px;border-radius:8px;box-shadow:var(--shadow-md);transform:translate(-50%,-110%);white-space:nowrap;opacity:0;transition:opacity .1s ease;z-index:20;line-height:1.5;}
+:root[data-theme="dark"] .chart-tooltip{background:#1a3760;}
+
+.pareto-row{display:flex;align-items:center;gap:10px;padding:7px 0;}
+.pareto-label{width:230px;flex:none;font-size:12px;font-weight:600;color:var(--ink-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pareto-track{flex:1;background:var(--paper-3);height:14px;border-radius:6px;overflow:hidden;position:relative;}
+.pareto-fill{height:100%;border-radius:6px;background:var(--brand);}
+.pareto-val{width:118px;flex:none;text-align:right;font-size:11.3px;color:var(--ink-2);font-weight:700;}
+.pareto-cum{width:56px;flex:none;text-align:right;font-size:10.6px;color:var(--ink-3);font-weight:600;}
+
+.foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:10.8px;color:var(--ink-3);}
+
+@media (max-width:1500px){
+  .kpi-grid{grid-template-columns:repeat(4,1fr);}
+  .cols-3,.cols-4,.cols-5{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .cols-2,.cols-3,.cols-4,.cols-5{grid-template-columns:1fr;}
+  .meta-strip{display:none;}
+  .pareto-label{width:140px;}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img class="brand-logo" id="brandLogo" alt="Logo Kementerian Hak Asasi Manusia RI">
+      <div class="brand-text">
+        <h1>Contact Center Executive Dashboard</h1>
+        <p>Kementerian Hak Asasi Manusia RI &middot; Command Center Performance</p>
+      </div>
+    </div>
+    <div class="meta-strip" id="metaStrip">
+      <div class="meta-item"><span class="k">Period</span><span class="v" id="metaPeriod">&mdash;</span></div>
+      <div class="meta-item"><span class="k">Business Unit</span><span class="v">Contact Center Kemenham</span></div>
+      <div class="meta-item"><span class="k">Channel</span><span class="v">Email &middot; WhatsApp &middot; Voice</span></div>
+      <div class="meta-item"><span class="k">Last Updated</span><span class="v" id="metaUpdated">&mdash;</span></div>
+    </div>
+    <div class="topbar-controls">
+      <button class="icon-btn" id="themeToggle" title="Toggle light / dark mode" aria-label="Toggle theme">
+        <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"></path></svg>
+      </button>
+    </div>
+  </div>
+  <div class="filterbar">
+    <span class="flabel">Period Filter</span>
+    <div class="seg" id="monthSeg" role="tablist" aria-label="Month filter"></div>
+    <span class="filter-hint" id="filterHint">Pilih bulan untuk menghitung ulang seluruh KPI, chart, dan insight terhadap bulan sebelumnya.</span>
+    <div class="filter-spacer"></div>
+    <span class="flabel">Trend View</span>
+    <div class="seg seg-sm" id="granSeg" role="tablist" aria-label="Granularity filter">
+      <button data-gran="daily">Daily</button>
+      <button data-gran="weekly">Weekly</button>
+      <button data-gran="monthly" class="active">Monthly</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ROW 1 : EXECUTIVE KPI CARDS -->
+  <div class="section" style="margin-top:22px;">
+    <div class="section-head">
+      <h2><span class="bar"></span>Executive KPI Cards</h2>
+      <p class="desc" id="kpiDesc">Actual vs Target vs Achievement % &middot; Trend vs Previous Period</p>
+    </div>
+    <div class="kpi-grid" id="kpiGrid"></div>
+  </div>
+
+  <!-- ROW 2 : EXECUTIVE PERFORMANCE SUMMARY -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Executive Performance Summary</h2>
+      <p class="desc">Overall index, channel mix, pace terhadap target, dan distribusi topik layanan</p>
+    </div>
+    <div class="grid cols-12" style="align-items:stretch;">
+      <div class="panel" style="grid-column:span 3;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="panel-head" style="width:100%;justify-content:center;"><p class="panel-title">Overall Performance Index</p></div>
+        <div class="gauge-block">
+          <div id="gaugeSvgWrap"></div>
+          <div class="gauge-status" id="gaugeStatus">HEALTHY</div>
+          <p style="font-size:10.8px;color:var(--ink-3);margin:10px 0 0;max-width:220px;">Blended score across Service, Quality, Experience &amp; Efficiency KPI families</p>
+        </div>
+      </div>
+      <div class="panel" style="grid-column:span 3;">
+        <div class="panel-head"><p class="panel-title">Contact Volume Ratio by Channel</p><span class="panel-tag" id="doughnutTotalTag">&mdash;</span></div>
+        <div class="chart-wrap"><canvas id="channelDoughnut" height="176"></canvas><div class="chart-tooltip" id="doughnutTooltip"></div></div>
+        <div class="legend" id="doughnutLegend"></div>
+      </div>
+      <div class="panel" style="grid-column:span 6;">
+        <div class="panel-head"><p class="panel-title">Performance Pace &amp; KPI Health</p></div>
+        <div class="grid cols-4" id="paceStats" style="gap:10px;"></div>
+        <div class="grid cols-2" style="gap:10px;margin-top:10px;">
+          <div class="stat-tile" style="display:flex;align-items:center;justify-content:space-between;">
+            <div><span class="k">KPIs Above Target</span><div class="v" id="kpiAboveCount" style="color:var(--good);">&mdash;</div></div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--good)" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+          </div>
+          <div class="stat-tile" style="display:flex;align-items:center;justify-content:space-between;">
+            <div><span class="k">KPIs Below Target</span><div class="v" id="kpiBelowCount" style="color:var(--critical);">&mdash;</div></div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--critical)" stroke-width="2.4" stroke-linecap="round"><path d="M12 8v5M12 16.5v.01M4.5 19h15L12 4.5 4.5 19Z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid cols-12" style="margin-top:16px;align-items:stretch;">
+      <div class="panel" style="grid-column:span 5;">
+        <div class="panel-head"><p class="panel-title">Top 5 Detail Subcategory — All Channel</p><span class="panel-sub" id="top5SubSub"></span></div>
+        <div id="top5SubList"></div>
+      </div>
+      <div class="panel" style="grid-column:span 7;">
+        <div class="panel-head"><p class="panel-title">Ratio Ticket Group by Subject — Detail Subcategory per Channel</p></div>
+        <div class="table-scroll"><table class="dtable" id="subjectChannelTable"></table></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3 : CONTACT VOLUME & DEMAND TREND -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Contact Volume &amp; Demand Trend</h2>
+      <p class="desc">Incoming vs answered vs abandoned, pola interval per jam, dan puncak beban kontak</p>
+    </div>
+    <div class="grid cols-12" style="align-items:stretch;">
+      <div class="panel" style="grid-column:span 8;">
+        <div class="panel-head"><p class="panel-title" id="volumeChartTitle">Daily Contact Volume</p><span class="panel-tag" id="volumeChartTag">&mdash;</span></div>
+        <div class="chart-wrap"><canvas id="volumeChart" height="230"></canvas><div class="chart-tooltip" id="volumeTooltip"></div></div>
+        <div class="legend" id="volumeLegend"></div>
+      </div>
+      <div class="panel" style="grid-column:span 4;display:flex;flex-direction:column;gap:10px;">
+        <div class="grid cols-2" style="gap:10px;">
+          <div class="stat-tile"><span class="k">Peak Hour</span><div class="v" id="peakHourStat">&mdash;</div><div class="d">Volume kontak tertinggi</div></div>
+          <div class="stat-tile"><span class="k">Highest Volume Day</span><div class="v" id="peakDayStat" style="font-size:14px;">&mdash;</div><div class="d" id="peakDayCount"></div></div>
+        </div>
+        <div class="stat-tile" style="flex:1;">
+          <span class="k">Ticket Volume by 30-Minute Interval</span>
+          <div class="chart-wrap" style="margin-top:8px;"><canvas id="intervalChart" height="150"></canvas><div class="chart-tooltip" id="intervalTooltip"></div></div>
+        </div>
+        <div class="stat-tile" id="spikeNote" style="background:var(--warning-bg);border-color:transparent;">
+          <span class="k" style="color:var(--warning);">Volume Signal</span>
+          <div class="d" id="spikeText" style="color:var(--ink-1);font-weight:600;margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 4 : SERVICE PERFORMANCE -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Service Performance</h2>
+      <p class="desc">Actual vs target &middot; Service Level, Answer Rate, Abandonment, ASA, SCR &amp; SLA Achievement</p>
+    </div>
+    <div class="grid cols-12">
+      <div class="panel" style="grid-column:span 8;">
+        <div class="panel-head"><p class="panel-title">Actual vs Target — Bullet View</p></div>
+        <div id="serviceBullets"></div>
+      </div>
+      <div class="panel" style="grid-column:span 4;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <p class="panel-title" style="align-self:flex-start;">SLA Achievement (Blended)</p>
+        <div class="gauge-block" style="margin-top:6px;">
+          <div id="slaGaugeWrap"></div>
+          <div class="gauge-status" id="slaGaugeStatus">HEALTHY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 5 : CUSTOMER EXPERIENCE -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Customer Experience</h2>
+      <p class="desc">CSAT, NPS, FCR, Complaint Resolution, Customer Effort Score &amp; sentimen pelanggan</p>
+    </div>
+    <div class="grid cols-12" style="align-items:stretch;">
+      <div class="panel" style="grid-column:span 5;">
+        <div class="panel-head"><p class="panel-title">Experience KPI</p></div>
+        <div class="grid cols-2" id="cxStats" style="gap:10px;"></div>
+      </div>
+      <div class="panel" style="grid-column:span 3;">
+        <div class="panel-head"><p class="panel-title">Sentiment Mix</p></div>
+        <div class="chart-wrap"><canvas id="sentimentDoughnut" height="150"></canvas><div class="chart-tooltip" id="sentimentTooltip"></div></div>
+        <div class="legend" id="sentimentLegend"></div>
+      </div>
+      <div class="panel" style="grid-column:span 4;">
+        <div class="panel-head"><p class="panel-title">Experience Movement (8 Bulan)</p></div>
+        <div class="chart-wrap"><canvas id="cxTrendChart" height="150"></canvas><div class="chart-tooltip" id="cxTooltip"></div></div>
+        <div class="legend" id="cxLegend"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 6 : OPERATIONAL EFFICIENCY -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Operational Efficiency</h2>
+      <p class="desc">AHT, occupancy, produktivitas agent, dan relasi volume kontak terhadap kapasitas agent</p>
+    </div>
+    <div class="grid cols-12" style="align-items:stretch;">
+      <div class="panel" style="grid-column:span 5;">
+        <div class="panel-head"><p class="panel-title">Efficiency KPI</p></div>
+        <div class="grid cols-2" id="opsStats" style="gap:10px;"></div>
+      </div>
+      <div class="panel" style="grid-column:span 7;">
+        <div class="panel-head"><p class="panel-title">Contact Volume vs Agent Capacity &amp; Occupancy</p><span class="panel-sub">Bar = volume tiket &middot; Garis = occupancy agent</span></div>
+        <div class="chart-wrap"><canvas id="opsRelChart" height="180"></canvas><div class="chart-tooltip" id="opsTooltip"></div></div>
+        <div class="legend" id="opsLegend"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 7 : WORKFORCE PERFORMANCE -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Workforce Performance</h2>
+      <p class="desc">Kapasitas agent, utilisasi, kepatuhan jadwal, dan peringkat produktivitas</p>
+    </div>
+    <div class="grid cols-12" style="align-items:stretch;">
+      <div class="panel" style="grid-column:span 5;">
+        <div class="panel-head"><p class="panel-title">Workforce Overview</p><span class="panel-tag" id="workforceHeadcountTag">&mdash;</span></div>
+        <div class="grid cols-2" id="workforceStats" style="gap:10px;"></div>
+      </div>
+      <div class="panel" style="grid-column:span 7;">
+        <div class="panel-head"><p class="panel-title">Agent Performance Ranking</p><span class="panel-sub" id="agentRankingSub"></span></div>
+        <div id="topAgents"></div>
+        <div id="coachingNote" style="margin-top:12px;padding:11px 13px;border-radius:12px;background:var(--warning-bg);font-size:12px;color:var(--ink-1);line-height:1.5;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 8 : QUALITY PERFORMANCE -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Quality Performance</h2>
+      <p class="desc">QA score, compliance, monitoring, coaching, dan repeat error rate</p>
+    </div>
+    <div class="grid cols-12" style="align-items:stretch;">
+      <div class="panel" style="grid-column:span 3;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <p class="panel-title" style="align-self:flex-start;">QA Score</p>
+        <div class="gauge-block" style="margin-top:6px;">
+          <div id="qaGaugeWrap"></div>
+          <div class="gauge-status" id="qaGaugeStatus">HEALTHY</div>
+        </div>
+      </div>
+      <div class="panel" style="grid-column:span 5;">
+        <div class="panel-head"><p class="panel-title">Quality &amp; Compliance KPI</p></div>
+        <div class="grid cols-3" id="qualityStats" style="gap:10px;"></div>
+      </div>
+      <div class="panel" style="grid-column:span 4;">
+        <div class="panel-head"><p class="panel-title">QA Score Trend (8 Bulan)</p></div>
+        <div class="chart-wrap"><canvas id="qualityTrendChart" height="150"></canvas><div class="chart-tooltip" id="qualityTooltip"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 9 : TOP CONTACT REASONS -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Top Contact Reasons</h2>
+      <p class="desc">Pareto kategori kontak dominan &middot; Volume | Kontribusi % | Kumulatif</p>
+    </div>
+    <div class="panel">
+      <div id="paretoList"></div>
+    </div>
+  </div>
+
+  <!-- ROW 10 : MANAGEMENT ATTENTION -->
+  <div class="section">
+    <div class="section-head">
+      <h2><span class="bar"></span>Management Attention</h2>
+      <p class="desc">Indikator KPI yang memerlukan perhatian, diurutkan berdasarkan dampak bisnis</p>
+    </div>
+    <div class="panel">
+      <div class="alert-list" id="alertsList"></div>
+    </div>
+  </div>
+
+  <!-- ROW 11 : INSIGHTS + ACTIONS -->
+  <div class="section">
+    <div class="grid cols-2">
+      <div>
+        <div class="section-head"><h2><span class="bar"></span>Key Executive Insights</h2></div>
+        <div class="panel" style="display:flex;flex-direction:column;gap:10px;" id="insightsList"></div>
+      </div>
+      <div>
+        <div class="section-head"><h2><span class="bar"></span>Recommended Actions</h2></div>
+        <div class="panel" style="display:flex;flex-direction:column;gap:10px;" id="actionsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Contact Center Executive Dashboard &middot; Kementerian Hak Asasi Manusia RI</span>
+    <span id="footRange">&mdash;</span>
+  </div>
+</div>
+
+<script>
+const LOGO_B64 = "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";
+</script>
+<script>
+const DATA = {"meta":{"org":"Kementerian Hak Asasi Manusia RI","unit":"Contact Center Kementerian HAM","channels":"Email \u00b7 WhatsApp \u00b7 Voice","period_label":"2 Januari \u2013 18 Agustus 2026","last_updated":"18 Agustus 2026, 23:59 WIB","months":[1,2,3,4,5,6,7,8],"month_names":{"1":"Jan","2":"Feb","3":"Mar","4":"Apr","5":"May","6":"Jun","7":"Jul","8":"Aug"}},"targets":{"volume":null,"sl":85,"scr":95,"answer_rate":95,"abandon_rate":5,"aht":600,"fcr":85,"csat":90,"qa_score":90,"occupancy":85,"asa":20,"complaint_res":95},"periods":{"1":{"total":265,"channels":{"Email":{"count":35,"pct":13.2},"Whatsapp":{"count":137,"pct":51.7},"Voice":{"count":93,"pct":35.1}},"avgfrt":903,"avgaht":909,"avgwait":7837,"sl":47.2,"scr":98.1,"complaint_res":100.0,"top_sub":[{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":100,"pct":37.7,"channels":{"Whatsapp":50,"Voice":47,"Email":3}},{"name":"Spam/testing/no subject","count":68,"pct":25.7,"channels":{"Whatsapp":55,"Voice":10,"Email":3}},{"name":"Informasi Umum seputar Kementerian HAM","count":41,"pct":15.5,"channels":{"Whatsapp":25,"Voice":6,"Email":10}},{"name":"Salah sambung","count":12,"pct":4.5,"channels":{"Whatsapp":1,"Voice":11}},{"name":"Terima call dan terputus saat dipertengahan telfon","count":12,"pct":4.5,"channels":{"Voice":12}},{"name":"Konfirmasi terkait balasan Email dan WhatsApp","count":11,"pct":4.2,"channels":{"Whatsapp":6,"Email":5}},{"name":"Diteruskan ke TU kemenham terkait lampiran dokumen kemenham","count":5,"pct":1.9,"channels":{"Email":5}},{"name":"Menghubungi kembali untuk Follow Up permasalahan sebelumnya","count":5,"pct":1.9,"channels":{"Email":3,"Voice":2}}],"top_cat":[{"name":"Informasi Umum","count":146,"pct":55.1},{"name":"Spam","count":68,"pct":25.7},{"name":"Lainnya","count":12,"pct":4.5},{"name":"Call Terputus","count":12,"pct":4.5},{"name":"Konfirmasi Email dan WhtsApp","count":11,"pct":4.2},{"name":"Follow Up","count":5,"pct":1.9},{"name":"Undangan","count":4,"pct":1.5},{"name":"Informasi","count":2,"pct":0.8}],"mainCat":{"Informasi":149,"Lainnya":103,"Permintaan":11,"Pengaduan":2},"sentiment":{"Positive":263,"Neutral":2},"daily":[{"date":"2026-01-02","total":42,"email":0,"whatsapp":38,"voice":4},{"date":"2026-01-03","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-04","total":6,"email":0,"whatsapp":6,"voice":0},{"date":"2026-01-05","total":20,"email":2,"whatsapp":15,"voice":3},{"date":"2026-01-06","total":12,"email":3,"whatsapp":7,"voice":2},{"date":"2026-01-07","total":16,"email":1,"whatsapp":5,"voice":10},{"date":"2026-01-08","total":13,"email":3,"whatsapp":5,"voice":5},{"date":"2026-01-09","total":11,"email":0,"whatsapp":5,"voice":6},{"date":"2026-01-10","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-12","total":15,"email":1,"whatsapp":3,"voice":11},{"date":"2026-01-13","total":17,"email":5,"whatsapp":5,"voice":7},{"date":"2026-01-14","total":9,"email":1,"whatsapp":4,"voice":4},{"date":"2026-01-15","total":11,"email":0,"whatsapp":8,"voice":3},{"date":"2026-01-19","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-20","total":11,"email":1,"whatsapp":7,"voice":3},{"date":"2026-01-21","total":17,"email":1,"whatsapp":7,"voice":9},{"date":"2026-01-22","total":12,"email":1,"whatsapp":5,"voice":6},{"date":"2026-01-23","total":6,"email":0,"whatsapp":3,"voice":3},{"date":"2026-01-24","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-25","total":4,"email":3,"whatsapp":1,"voice":0},{"date":"2026-01-26","total":9,"email":2,"whatsapp":3,"voice":4},{"date":"2026-01-27","total":4,"email":1,"whatsapp":3,"voice":0},{"date":"2026-01-28","total":7,"email":3,"whatsapp":4,"voice":0},{"date":"2026-01-29","total":7,"email":1,"whatsapp":1,"voice":5},{"date":"2026-01-30","total":12,"email":2,"whatsapp":2,"voice":8}],"hour_dist":[5,4,3,2,7,3,4,6,20,30,27,14,16,15,26,17,19,13,7,15,8,2,1,1],"agents":{"Stefani":132,"Andivia Larissa":132},"peak_day":"2026-01-02","peak_day_count":42,"peak_hour":9,"call":{"cof":37,"acd":36,"answer_rate":97.3,"abandon_rate":3.2,"call_aht":213},"fcr":85.2,"csat":93.7,"qa_score":90.2,"occupancy":60.5,"asa":16.0,"nps":71,"ces":3.36,"critical_error_rate":3.0,"compliance_score":93.3,"coaching_completion":72,"call_monitoring_count":21,"repeat_error_rate":6.0,"schedule_adherence":90.3,"attendance":94.2,"utilization":56.9,"acw_sec":34,"hold_sec":25,"idle_sec":177,"month":1,"name":"January","abbr":"Jan","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":132,"csat":90.3,"qa":92.0,"aht":780,"adherence":88.9,"score":90.7},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":132,"csat":80.1,"qa":84.9,"aht":1006,"adherence":95.6,"score":85.1}]},"2":{"total":146,"channels":{"Email":{"count":50,"pct":34.2},"Whatsapp":{"count":47,"pct":32.2},"Voice":{"count":49,"pct":33.6}},"avgfrt":862,"avgaht":867,"avgwait":9222,"sl":55.5,"scr":97.9,"complaint_res":100.0,"top_sub":[{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":57,"pct":39.0,"channels":{"Whatsapp":17,"Voice":19,"Email":21}},{"name":"Spam/testing/no subject","count":35,"pct":24.0,"channels":{"Whatsapp":30,"Voice":5}},{"name":"Informasi Umum seputar Kementerian HAM","count":16,"pct":11.0,"channels":{"Email":8,"Voice":8}},{"name":"Terima call dan terputus saat dipertengahan telfon","count":10,"pct":6.8,"channels":{"Voice":10}},{"name":"Undangan untuk Kementerian Hak Asasi Manusia","count":7,"pct":4.8,"channels":{"Email":7}},{"name":"Salah sambung","count":5,"pct":3.4,"channels":{"Voice":5}},{"name":"Konfirmasi terkait balasan Email dan WhatsApp","count":4,"pct":2.7,"channels":{"Email":4}},{"name":"Pemintaan Audiensi dan kelengkapan berkas dan data ke kemenham","count":3,"pct":2.1,"channels":{"Voice":1,"Email":2}}],"top_cat":[{"name":"Informasi Umum","count":73,"pct":50.0},{"name":"Spam","count":35,"pct":24.0},{"name":"Call Terputus","count":10,"pct":6.8},{"name":"Undangan","count":7,"pct":4.8},{"name":"Lainnya","count":5,"pct":3.4},{"name":"Konfirmasi Email dan WhtsApp","count":4,"pct":2.7},{"name":"Pemintaan Audiensi","count":3,"pct":2.1},{"name":"Pelanggaran HAM","count":3,"pct":2.1}],"mainCat":{"Informasi":75,"Lainnya":54,"Permintaan":14,"Pengaduan":3},"sentiment":{"Positive":144,"Neutral":2},"daily":[{"date":"2026-02-01","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-02-02","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-02-03","total":32,"email":10,"whatsapp":9,"voice":13},{"date":"2026-02-04","total":8,"email":2,"whatsapp":2,"voice":4},{"date":"2026-02-05","total":5,"email":0,"whatsapp":3,"voice":2},{"date":"2026-02-06","total":7,"email":3,"whatsapp":2,"voice":2},{"date":"2026-02-09","total":6,"email":0,"whatsapp":1,"voice":5},{"date":"2026-02-10","total":7,"email":1,"whatsapp":2,"voice":4},{"date":"2026-02-11","total":7,"email":1,"whatsapp":2,"voice":4},{"date":"2026-02-12","total":6,"email":5,"whatsapp":1,"voice":0},{"date":"2026-02-13","total":5,"email":2,"whatsapp":2,"voice":1},{"date":"2026-02-14","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-02-15","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-02-18","total":13,"email":2,"whatsapp":9,"voice":2},{"date":"2026-02-19","total":4,"email":1,"whatsapp":2,"voice":1},{"date":"2026-02-20","total":6,"email":4,"whatsapp":2,"voice":0},{"date":"2026-02-21","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-02-23","total":4,"email":3,"whatsapp":1,"voice":0},{"date":"2026-02-24","total":5,"email":2,"whatsapp":0,"voice":3},{"date":"2026-02-25","total":14,"email":7,"whatsapp":1,"voice":6},{"date":"2026-02-26","total":3,"email":2,"whatsapp":1,"voice":0},{"date":"2026-02-27","total":4,"email":1,"whatsapp":2,"voice":1}],"hour_dist":[1,0,0,0,1,0,1,2,20,16,20,8,7,15,11,9,10,10,2,8,2,3,0,0],"agents":{"Andivia Larissa":72,"Stefani":74},"peak_day":"2026-02-03","peak_day_count":32,"peak_hour":8,"call":{"cof":49,"acd":49,"answer_rate":100.0,"abandon_rate":0.0,"call_aht":115},"fcr":87.4,"csat":92.7,"qa_score":87.0,"occupancy":53.9,"asa":8.6,"nps":65,"ces":3.61,"critical_error_rate":2.8,"compliance_score":91.2,"coaching_completion":84,"call_monitoring_count":21,"repeat_error_rate":5.6,"schedule_adherence":92.8,"attendance":94.3,"utilization":49.0,"acw_sec":29,"hold_sec":23,"idle_sec":171,"month":2,"name":"February","abbr":"Feb","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":74,"csat":88.8,"qa":81.4,"aht":950,"adherence":96.3,"score":87.3},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":72,"csat":90.7,"qa":82.2,"aht":960,"adherence":85.5,"score":86.3}]},"3":{"total":109,"channels":{"Email":{"count":38,"pct":34.9},"Whatsapp":{"count":40,"pct":36.7},"Voice":{"count":31,"pct":28.4}},"avgfrt":509,"avgaht":520,"avgwait":9108,"sl":65.1,"scr":99.1,"complaint_res":null,"top_sub":[{"name":"Spam/testing/no subject","count":31,"pct":28.4,"channels":{"Whatsapp":28,"Email":1,"Voice":2}},{"name":"Informasi Umum seputar Kementerian HAM","count":18,"pct":16.5,"channels":{"Email":9,"Whatsapp":4,"Voice":5}},{"name":"Undangan untuk Kementerian Hak Asasi Manusia","count":11,"pct":10.1,"channels":{"Email":11}},{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":10,"pct":9.2,"channels":{"Email":2,"Voice":2,"Whatsapp":6}},{"name":"Bagaimana cara menyampaikan pengaduan","count":10,"pct":9.2,"channels":{"Whatsapp":1,"Voice":9}},{"name":"Menghubungi kembali untuk Follow Up permasalahan sebelumnya","count":7,"pct":6.4,"channels":{"Email":6,"Whatsapp":1}},{"name":"Salah sambung","count":5,"pct":4.6,"channels":{"Voice":5}},{"name":"Terima call dan terputus saat dipertengahan telfon","count":4,"pct":3.7,"channels":{"Voice":4}}],"top_cat":[{"name":"Spam","count":31,"pct":28.4},{"name":"Informasi Umum","count":28,"pct":25.7},{"name":"Informasi pengaduan umum","count":12,"pct":11.0},{"name":"Undangan","count":11,"pct":10.1},{"name":"Follow Up","count":7,"pct":6.4},{"name":"Lainnya","count":5,"pct":4.6},{"name":"Call Terputus","count":4,"pct":3.7},{"name":"Permintaan","count":3,"pct":2.8}],"mainCat":{"Lainnya":43,"Informasi":42,"Permintaan":24},"sentiment":{"Positive":108,"Neutral":1},"daily":[{"date":"2026-03-02","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-03-03","total":6,"email":4,"whatsapp":2,"voice":0},{"date":"2026-03-04","total":5,"email":3,"whatsapp":2,"voice":0},{"date":"2026-03-05","total":4,"email":1,"whatsapp":2,"voice":1},{"date":"2026-03-06","total":6,"email":3,"whatsapp":3,"voice":0},{"date":"2026-03-09","total":7,"email":4,"whatsapp":1,"voice":2},{"date":"2026-03-10","total":7,"email":2,"whatsapp":4,"voice":1},{"date":"2026-03-11","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-03-12","total":3,"email":1,"whatsapp":2,"voice":0},{"date":"2026-03-13","total":4,"email":0,"whatsapp":3,"voice":1},{"date":"2026-03-15","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-03-16","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-03-17","total":12,"email":2,"whatsapp":2,"voice":8},{"date":"2026-03-25","total":12,"email":5,"whatsapp":2,"voice":5},{"date":"2026-03-26","total":9,"email":0,"whatsapp":4,"voice":5},{"date":"2026-03-27","total":7,"email":1,"whatsapp":3,"voice":3},{"date":"2026-03-28","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-03-30","total":5,"email":2,"whatsapp":2,"voice":1},{"date":"2026-03-31","total":5,"email":2,"whatsapp":1,"voice":2}],"hour_dist":[1,0,0,0,0,0,2,2,10,11,20,9,1,4,18,12,3,2,3,8,2,0,0,1],"agents":{"Andivia Larissa":49,"Stefani":60},"peak_day":"2026-03-17","peak_day_count":12,"peak_hour":10,"call":{"cof":30,"acd":30,"answer_rate":100.0,"abandon_rate":0.0,"call_aht":90},"fcr":87.7,"csat":94.0,"qa_score":87.2,"occupancy":53.8,"asa":7.0,"nps":65,"ces":3.7,"critical_error_rate":2.8,"compliance_score":90.6,"coaching_completion":71,"call_monitoring_count":22,"repeat_error_rate":6.7,"schedule_adherence":90.7,"attendance":94.8,"utilization":48.9,"acw_sec":30,"hold_sec":22,"idle_sec":157,"month":3,"name":"March","abbr":"Mar","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":60,"csat":87.0,"qa":83.4,"aht":567,"adherence":88.8,"score":85.9},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":49,"csat":81.2,"qa":75.9,"aht":512,"adherence":93.6,"score":81.6}]},"4":{"total":271,"channels":{"Email":{"count":48,"pct":17.7},"Whatsapp":{"count":185,"pct":68.3},"Voice":{"count":38,"pct":14.0}},"avgfrt":1249,"avgaht":1245,"avgwait":3956,"sl":46.1,"scr":98.2,"complaint_res":100.0,"top_sub":[{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":148,"pct":54.6,"channels":{"Whatsapp":143,"Voice":3,"Email":2}},{"name":"Spam/testing/no subject/empty call","count":36,"pct":13.3,"channels":{"Whatsapp":22,"Voice":14}},{"name":"Spam/testing/no subject","count":12,"pct":4.4,"channels":{"Whatsapp":11,"Voice":1}},{"name":"Informasi Umum seputar Kementerian HAM","count":12,"pct":4.4,"channels":{"Email":7,"Whatsapp":4,"Voice":1}},{"name":"Semua Pelanggaran HAM","count":11,"pct":4.1,"channels":{"Voice":3,"Email":8}},{"name":"Permintaan ke KemenHAM","count":8,"pct":3.0,"channels":{"Email":8}},{"name":"Undangan untuk Kementerian Hak Asasi Manusia","count":6,"pct":2.2,"channels":{"Email":6}},{"name":"Terima call dan terputus saat dipertengahan telfon","count":6,"pct":2.2,"channels":{"Voice":6}}],"top_cat":[{"name":"Informasi Umum","count":160,"pct":59.0},{"name":"Spam","count":48,"pct":17.7},{"name":"Pelanggaran HAM","count":11,"pct":4.1},{"name":"Permintaan ke KemenHAM","count":8,"pct":3.0},{"name":"Undangan","count":6,"pct":2.2},{"name":"Call Terputus","count":6,"pct":2.2},{"name":"Konfirmasi Email dan WhtsApp","count":6,"pct":2.2},{"name":"Pemintaan Audiensi","count":6,"pct":2.2}],"mainCat":{"Lainnya":65,"Pengaduan":12,"Permintaan":27,"Informasi":167},"sentiment":{"Positive":271},"daily":[{"date":"2026-04-01","total":4,"email":0,"whatsapp":2,"voice":2},{"date":"2026-04-02","total":5,"email":3,"whatsapp":1,"voice":1},{"date":"2026-04-05","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-04-06","total":12,"email":9,"whatsapp":1,"voice":2},{"date":"2026-04-07","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-04-08","total":8,"email":5,"whatsapp":2,"voice":1},{"date":"2026-04-09","total":4,"email":0,"whatsapp":2,"voice":2},{"date":"2026-04-10","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-04-11","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-04-13","total":9,"email":4,"whatsapp":2,"voice":3},{"date":"2026-04-14","total":3,"email":1,"whatsapp":1,"voice":1},{"date":"2026-04-15","total":9,"email":2,"whatsapp":4,"voice":3},{"date":"2026-04-16","total":6,"email":0,"whatsapp":2,"voice":4},{"date":"2026-04-17","total":11,"email":1,"whatsapp":3,"voice":7},{"date":"2026-04-20","total":2,"email":0,"whatsapp":2,"voice":0},{"date":"2026-04-21","total":8,"email":1,"whatsapp":5,"voice":2},{"date":"2026-04-22","total":6,"email":3,"whatsapp":2,"voice":1},{"date":"2026-04-23","total":5,"email":2,"whatsapp":3,"voice":0},{"date":"2026-04-24","total":16,"email":4,"whatsapp":12,"voice":0},{"date":"2026-04-25","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-04-26","total":3,"email":1,"whatsapp":2,"voice":0},{"date":"2026-04-27","total":40,"email":0,"whatsapp":38,"voice":2},{"date":"2026-04-28","total":45,"email":2,"whatsapp":40,"voice":3},{"date":"2026-04-29","total":27,"email":2,"whatsapp":24,"voice":1},{"date":"2026-04-30","total":34,"email":1,"whatsapp":31,"voice":2}],"hour_dist":[0,4,0,0,0,2,4,3,26,23,21,17,12,23,26,16,15,14,18,25,17,4,0,1],"agents":{"Andivia Larissa":145,"Stefani":126},"peak_day":"2026-04-28","peak_day_count":45,"peak_hour":8,"call":{"cof":37,"acd":37,"answer_rate":100.0,"abandon_rate":0.0,"call_aht":87},"fcr":84.7,"csat":91.4,"qa_score":84.8,"occupancy":60.0,"asa":9.8,"nps":64,"ces":3.43,"critical_error_rate":3.2,"compliance_score":90.8,"coaching_completion":72,"call_monitoring_count":23,"repeat_error_rate":5.9,"schedule_adherence":91.7,"attendance":96.8,"utilization":56.8,"acw_sec":32,"hold_sec":28,"idle_sec":170,"month":4,"name":"April","abbr":"Apr","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":126,"csat":89.4,"qa":88.1,"aht":1132,"adherence":92.3,"score":89.5},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":145,"csat":88.4,"qa":83.4,"aht":1197,"adherence":90.4,"score":86.8}]},"5":{"total":196,"channels":{"Email":{"count":71,"pct":36.2},"Whatsapp":{"count":105,"pct":53.6},"Voice":{"count":20,"pct":10.2}},"avgfrt":657,"avgaht":665,"avgwait":7657,"sl":67.9,"scr":98.5,"complaint_res":100.0,"top_sub":[{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":76,"pct":38.8,"channels":{"Whatsapp":74,"Voice":2}},{"name":"Spam/testing/no subject/empty call","count":45,"pct":23.0,"channels":{"Voice":7,"Email":11,"Whatsapp":27}},{"name":"Permintaan ke KemenHAM","count":15,"pct":7.7,"channels":{"Email":15}},{"name":"Informasi Umum seputar Kementerian HAM","count":11,"pct":5.6,"channels":{"Email":8,"Voice":3}},{"name":"Permintaan Follow Up Pengaduan","count":7,"pct":3.6,"channels":{"Email":4,"Whatsapp":2,"Voice":1}},{"name":"Bagaimana cara menyampaikan pengaduan","count":7,"pct":3.6,"channels":{"Email":7}},{"name":"Undangan untuk Kementerian Hak Asasi Manusia","count":6,"pct":3.1,"channels":{"Email":6}},{"name":"Konfirmasi terkait balasan Email dan WhatsApp","count":5,"pct":2.6,"channels":{"Email":5}}],"top_cat":[{"name":"Informasi Umum","count":89,"pct":45.4},{"name":"Spam","count":45,"pct":23.0},{"name":"Permintaan ke KemenHAM","count":15,"pct":7.7},{"name":"Follow Up","count":10,"pct":5.1},{"name":"Informasi pengaduan umum","count":7,"pct":3.6},{"name":"Undangan","count":6,"pct":3.1},{"name":"Konfirmasi Email dan WhtsApp","count":5,"pct":2.6},{"name":"Pengaduan Follow Up","count":4,"pct":2.0}],"mainCat":{"Informasi":97,"Lainnya":56,"Permintaan":36,"Pengaduan":7},"sentiment":{"Positive":196},"daily":[{"date":"2026-05-04","total":33,"email":7,"whatsapp":23,"voice":3},{"date":"2026-05-05","total":21,"email":4,"whatsapp":17,"voice":0},{"date":"2026-05-06","total":9,"email":1,"whatsapp":8,"voice":0},{"date":"2026-05-07","total":7,"email":2,"whatsapp":4,"voice":1},{"date":"2026-05-08","total":13,"email":6,"whatsapp":5,"voice":2},{"date":"2026-05-10","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-05-11","total":10,"email":5,"whatsapp":3,"voice":2},{"date":"2026-05-12","total":11,"email":6,"whatsapp":3,"voice":2},{"date":"2026-05-13","total":6,"email":1,"whatsapp":4,"voice":1},{"date":"2026-05-16","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-05-17","total":5,"email":5,"whatsapp":0,"voice":0},{"date":"2026-05-18","total":13,"email":8,"whatsapp":2,"voice":3},{"date":"2026-05-19","total":10,"email":6,"whatsapp":3,"voice":1},{"date":"2026-05-20","total":6,"email":3,"whatsapp":3,"voice":0},{"date":"2026-05-21","total":7,"email":2,"whatsapp":5,"voice":0},{"date":"2026-05-22","total":10,"email":4,"whatsapp":5,"voice":1},{"date":"2026-05-25","total":14,"email":5,"whatsapp":7,"voice":2},{"date":"2026-05-26","total":10,"email":3,"whatsapp":5,"voice":2},{"date":"2026-05-29","total":6,"email":1,"whatsapp":5,"voice":0},{"date":"2026-05-30","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-05-31","total":2,"email":1,"whatsapp":1,"voice":0}],"hour_dist":[1,0,4,1,0,1,0,3,24,26,19,15,11,14,18,5,12,13,5,12,7,1,2,2],"agents":{"Andivia Larissa":92,"Stefani":104},"peak_day":"2026-05-04","peak_day_count":33,"peak_hour":9,"call":{"cof":20,"acd":20,"answer_rate":100.0,"abandon_rate":0.0,"call_aht":0},"fcr":85.4,"csat":96,"qa_score":89.7,"occupancy":56.5,"asa":9.5,"nps":67,"ces":3.69,"critical_error_rate":2.3,"compliance_score":91.3,"coaching_completion":80,"call_monitoring_count":20,"repeat_error_rate":5.1,"schedule_adherence":90.3,"attendance":95.6,"utilization":52.6,"acw_sec":28,"hold_sec":24,"idle_sec":180,"month":5,"name":"May","abbr":"May","workforce":[{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":92,"csat":85.8,"qa":86.2,"aht":616,"adherence":89.1,"score":86.6},{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":104,"csat":80.4,"qa":91.4,"aht":713,"adherence":88.2,"score":86.4}]},"6":{"total":1055,"channels":{"Email":{"count":674,"pct":63.9},"Whatsapp":{"count":315,"pct":29.9},"Voice":{"count":66,"pct":6.3}},"avgfrt":581,"avgaht":586,"avgwait":50701,"sl":81.3,"scr":86.3,"complaint_res":100.0,"top_sub":[{"name":"Informasi Umum Penggerak HAM","count":700,"pct":66.4,"channels":{"Whatsapp":193,"Email":483,"Voice":24}},{"name":"Informasi Umum seputar Kementerian HAM","count":87,"pct":8.2,"channels":{"Email":67,"Whatsapp":17,"Voice":3}},{"name":"Spam/testing/no subject/empty call","count":86,"pct":8.2,"channels":{"Whatsapp":42,"Voice":6,"Email":38}},{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":53,"pct":5.0,"channels":{"Whatsapp":49,"Voice":3,"Email":1}},{"name":"Salah sambung","count":26,"pct":2.5,"channels":{"Voice":23,"Whatsapp":3}},{"name":"Konfirmasi terkait balasan Email dan WhatsApp","count":26,"pct":2.5,"channels":{"Email":26}},{"name":"Permintaan ke KemenHAM","count":16,"pct":1.5,"channels":{"Email":15,"Voice":1}},{"name":"Undangan untuk Kementerian Hak Asasi Manusia","count":15,"pct":1.4,"channels":{"Email":15}}],"top_cat":[{"name":"Informasi Umum","count":840,"pct":79.6},{"name":"Spam","count":86,"pct":8.2},{"name":"Lainnya","count":26,"pct":2.5},{"name":"Konfirmasi Email dan WhtsApp","count":26,"pct":2.5},{"name":"Permintaan ke KemenHAM","count":16,"pct":1.5},{"name":"Undangan","count":15,"pct":1.4},{"name":"Informasi pengaduan umum","count":15,"pct":1.4},{"name":"Pengaduan Follow Up","count":7,"pct":0.7}],"mainCat":{"Informasi":860,"Lainnya":143,"Permintaan":43,"Pengaduan":9},"sentiment":{"Positive":1053,"Neutral":2},"daily":[{"date":"2026-06-02","total":12,"email":5,"whatsapp":4,"voice":3},{"date":"2026-06-03","total":9,"email":4,"whatsapp":4,"voice":1},{"date":"2026-06-04","total":8,"email":2,"whatsapp":4,"voice":2},{"date":"2026-06-05","total":5,"email":1,"whatsapp":2,"voice":2},{"date":"2026-06-06","total":3,"email":3,"whatsapp":0,"voice":0},{"date":"2026-06-07","total":3,"email":2,"whatsapp":1,"voice":0},{"date":"2026-06-08","total":10,"email":5,"whatsapp":5,"voice":0},{"date":"2026-06-09","total":9,"email":5,"whatsapp":2,"voice":2},{"date":"2026-06-10","total":8,"email":3,"whatsapp":4,"voice":1},{"date":"2026-06-11","total":23,"email":7,"whatsapp":14,"voice":2},{"date":"2026-06-12","total":29,"email":18,"whatsapp":11,"voice":0},{"date":"2026-06-13","total":6,"email":6,"whatsapp":0,"voice":0},{"date":"2026-06-14","total":14,"email":8,"whatsapp":6,"voice":0},{"date":"2026-06-15","total":38,"email":20,"whatsapp":16,"voice":2},{"date":"2026-06-16","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-06-17","total":67,"email":30,"whatsapp":34,"voice":3},{"date":"2026-06-18","total":27,"email":18,"whatsapp":7,"voice":2},{"date":"2026-06-19","total":37,"email":20,"whatsapp":14,"voice":3},{"date":"2026-06-20","total":101,"email":101,"whatsapp":0,"voice":0},{"date":"2026-06-21","total":54,"email":39,"whatsapp":15,"voice":0},{"date":"2026-06-22","total":122,"email":71,"whatsapp":47,"voice":4},{"date":"2026-06-23","total":118,"email":53,"whatsapp":55,"voice":10},{"date":"2026-06-24","total":190,"email":133,"whatsapp":40,"voice":17},{"date":"2026-06-25","total":63,"email":49,"whatsapp":9,"voice":5},{"date":"2026-06-26","total":32,"email":24,"whatsapp":6,"voice":2},{"date":"2026-06-27","total":8,"email":8,"whatsapp":0,"voice":0},{"date":"2026-06-28","total":10,"email":8,"whatsapp":2,"voice":0},{"date":"2026-06-29","total":23,"email":11,"whatsapp":10,"voice":2},{"date":"2026-06-30","total":25,"email":19,"whatsapp":3,"voice":3}],"hour_dist":[10,8,8,1,7,11,15,40,66,75,83,80,77,57,76,75,50,45,54,60,48,38,44,27],"agents":{"Stefani":513,"Andivia Larissa":542},"peak_day":"2026-06-24","peak_day_count":190,"peak_hour":10,"call":{"cof":66,"acd":66,"answer_rate":100.0,"abandon_rate":0.0,"call_aht":482},"fcr":74.5,"csat":96,"qa_score":84.6,"occupancy":95.7,"asa":7.4,"nps":71,"ces":3.85,"critical_error_rate":3.1,"compliance_score":90.0,"coaching_completion":73,"call_monitoring_count":25,"repeat_error_rate":5.8,"schedule_adherence":88.0,"attendance":95.6,"utilization":91.3,"acw_sec":45,"hold_sec":36,"idle_sec":129,"month":6,"name":"June","abbr":"Jun","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":513,"csat":87.6,"qa":88.8,"aht":589,"adherence":91.6,"score":88.9},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":542,"csat":77.4,"qa":80.9,"aht":601,"adherence":85.1,"score":80.3}]},"7":{"total":641,"channels":{"Email":{"count":402,"pct":62.7},"Whatsapp":{"count":194,"pct":30.3},"Voice":{"count":45,"pct":7.0}},"avgfrt":545,"avgaht":549,"avgwait":16576,"sl":82.2,"scr":97.7,"complaint_res":100.0,"top_sub":[{"name":"Informasi Umum Penggerak HAM","count":302,"pct":47.1,"channels":{"Email":232,"Whatsapp":64,"Voice":6}},{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":71,"pct":11.1,"channels":{"Whatsapp":68,"Voice":3}},{"name":"Informasi Umum seputar Kementerian HAM","count":57,"pct":8.9,"channels":{"Email":41,"Whatsapp":13,"Voice":3}},{"name":"Spam/testing/no subject/empty call","count":39,"pct":6.1,"channels":{"Email":11,"Whatsapp":21,"Voice":7}},{"name":"Konfirmasi terkait balasan Email dan WhatsApp","count":26,"pct":4.1,"channels":{"Email":26}},{"name":"Bagaimana cara menyampaikan pengaduan","count":21,"pct":3.3,"channels":{"Whatsapp":10,"Email":11}},{"name":"Undangan untuk Kementerian Hak Asasi Manusia","count":14,"pct":2.2,"channels":{"Email":14}},{"name":"Salah sambung","count":14,"pct":2.2,"channels":{"Voice":10,"Email":2,"Whatsapp":2}}],"top_cat":[{"name":"Informasi Umum","count":433,"pct":67.6},{"name":"Spam","count":39,"pct":6.1},{"name":"Konfirmasi Email dan WhtsApp","count":26,"pct":4.1},{"name":"Informasi Pengaduan Umum","count":23,"pct":3.6},{"name":"Lainnya","count":14,"pct":2.2},{"name":"Informasi pengaduan umum","count":13,"pct":2.0},{"name":"Undangan","count":12,"pct":1.9},{"name":"Permintaan ke KemenHAM","count":10,"pct":1.6}],"mainCat":{"Informasi":497,"Permintaan":53,"Lainnya":83,"Pengaduan":8},"sentiment":{"Positive":640,"Neutral":1},"daily":[{"date":"2026-07-01","total":112,"email":74,"whatsapp":32,"voice":6},{"date":"2026-07-02","total":65,"email":40,"whatsapp":20,"voice":5},{"date":"2026-07-03","total":29,"email":15,"whatsapp":13,"voice":1},{"date":"2026-07-04","total":9,"email":9,"whatsapp":0,"voice":0},{"date":"2026-07-05","total":13,"email":11,"whatsapp":2,"voice":0},{"date":"2026-07-06","total":46,"email":28,"whatsapp":15,"voice":3},{"date":"2026-07-07","total":24,"email":18,"whatsapp":5,"voice":1},{"date":"2026-07-08","total":20,"email":14,"whatsapp":3,"voice":3},{"date":"2026-07-09","total":30,"email":22,"whatsapp":6,"voice":2},{"date":"2026-07-10","total":25,"email":17,"whatsapp":6,"voice":2},{"date":"2026-07-11","total":6,"email":6,"whatsapp":0,"voice":0},{"date":"2026-07-12","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-07-13","total":17,"email":8,"whatsapp":7,"voice":2},{"date":"2026-07-14","total":11,"email":6,"whatsapp":4,"voice":1},{"date":"2026-07-15","total":7,"email":3,"whatsapp":4,"voice":0},{"date":"2026-07-16","total":16,"email":9,"whatsapp":6,"voice":1},{"date":"2026-07-17","total":8,"email":3,"whatsapp":5,"voice":0},{"date":"2026-07-18","total":12,"email":12,"whatsapp":0,"voice":0},{"date":"2026-07-19","total":4,"email":2,"whatsapp":2,"voice":0},{"date":"2026-07-20","total":25,"email":13,"whatsapp":10,"voice":2},{"date":"2026-07-21","total":22,"email":14,"whatsapp":6,"voice":2},{"date":"2026-07-22","total":16,"email":10,"whatsapp":6,"voice":0},{"date":"2026-07-23","total":17,"email":8,"whatsapp":6,"voice":3},{"date":"2026-07-24","total":8,"email":4,"whatsapp":3,"voice":1},{"date":"2026-07-25","total":5,"email":5,"whatsapp":0,"voice":0},{"date":"2026-07-26","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-07-27","total":18,"email":10,"whatsapp":7,"voice":1},{"date":"2026-07-28","total":15,"email":7,"whatsapp":6,"voice":2},{"date":"2026-07-29","total":25,"email":12,"whatsapp":10,"voice":3},{"date":"2026-07-30","total":17,"email":9,"whatsapp":5,"voice":3},{"date":"2026-07-31","total":12,"email":7,"whatsapp":4,"voice":1}],"hour_dist":[10,4,4,5,7,7,5,29,70,58,50,57,42,39,37,35,29,27,31,34,31,8,18,4],"agents":{"Stefani":318,"Andivia Larissa":323},"peak_day":"2026-07-01","peak_day_count":112,"peak_hour":8,"call":{"cof":45,"acd":45,"answer_rate":100.0,"abandon_rate":22.2,"call_aht":341},"fcr":82.9,"csat":94.7,"qa_score":85.0,"occupancy":75.5,"asa":34,"nps":65,"ces":3.86,"critical_error_rate":3.3,"compliance_score":90.2,"coaching_completion":75,"call_monitoring_count":22,"repeat_error_rate":6.5,"schedule_adherence":90.1,"attendance":96.9,"utilization":71.6,"acw_sec":42,"hold_sec":32,"idle_sec":125,"month":7,"name":"July","abbr":"Jul","workforce":[{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":323,"csat":86.5,"qa":85.5,"aht":489,"adherence":85.0,"score":85.8},{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":318,"csat":84.3,"qa":84.2,"aht":608,"adherence":88.5,"score":85.1}]},"8":{"total":160,"channels":{"Email":{"count":104,"pct":65.0},"Whatsapp":{"count":40,"pct":25.0},"Voice":{"count":16,"pct":10.0}},"avgfrt":457,"avgaht":464,"avgwait":25451,"sl":84.4,"scr":95.0,"complaint_res":100.0,"top_sub":[{"name":"Informasi Umum seputar Kementerian HAM","count":23,"pct":14.4,"channels":{"Email":19,"Voice":2,"Whatsapp":2}},{"name":"Spam/testing/no subject/empty call","count":22,"pct":13.8,"channels":{"Email":8,"Voice":5,"Whatsapp":9}},{"name":"Bagaimana cara menyampaikan pengaduan","count":20,"pct":12.5,"channels":{"Whatsapp":1,"Email":18,"Voice":1}},{"name":"Follow Up Magang Ke KemenHAM yg sebelumnya sudah di ajukan","count":11,"pct":6.9,"channels":{"Email":10,"Voice":1}},{"name":"Informasi Proses/Tata Cara Pengaduan Ke SIMASHAM","count":9,"pct":5.6,"channels":{"Email":8,"Voice":1}},{"name":"Bagaimana cara mengecek progress pengaduan (Progres Pengaduan HAM)","count":7,"pct":4.4,"channels":{"Whatsapp":7}},{"name":"Permintaan Follow Up Pengaduan yg sebelumnya sudah di adukan","count":7,"pct":4.4,"channels":{"Whatsapp":5,"Email":2}},{"name":"Permintaan Magang Ke KemenHAM","count":7,"pct":4.4,"channels":{"Email":7}}],"top_cat":[{"name":"Informasi Umum","count":35,"pct":21.9},{"name":"Informasi Pengaduan Umum","count":22,"pct":13.8},{"name":"Spam","count":22,"pct":13.8},{"name":"Follow Up Magang Ke KemenHAM","count":11,"pct":6.9},{"name":"Proses Pengaduan Ke SIMASHAM","count":9,"pct":5.6},{"name":"Follow Up Pengaduan","count":7,"pct":4.4},{"name":"Permintaan Magang ke KemenHAM","count":7,"pct":4.4},{"name":"Pemintaan Audiensi","count":6,"pct":3.8}],"mainCat":{"Lainnya":30,"Informasi":82,"Permintaan":45,"Pengaduan":3},"sentiment":{"Positive":160},"daily":[{"date":"2026-08-01","total":8,"email":8,"whatsapp":0,"voice":0},{"date":"2026-08-02","total":4,"email":4,"whatsapp":0,"voice":0},{"date":"2026-08-03","total":7,"email":3,"whatsapp":3,"voice":1},{"date":"2026-08-04","total":8,"email":5,"whatsapp":3,"voice":0},{"date":"2026-08-05","total":19,"email":11,"whatsapp":7,"voice":1},{"date":"2026-08-06","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-08-07","total":15,"email":10,"whatsapp":2,"voice":3},{"date":"2026-08-08","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-08-09","total":6,"email":6,"whatsapp":0,"voice":0},{"date":"2026-08-10","total":12,"email":4,"whatsapp":6,"voice":2},{"date":"2026-08-11","total":10,"email":3,"whatsapp":6,"voice":1},{"date":"2026-08-12","total":21,"email":15,"whatsapp":3,"voice":3},{"date":"2026-08-13","total":12,"email":8,"whatsapp":3,"voice":1},{"date":"2026-08-14","total":15,"email":10,"whatsapp":2,"voice":3},{"date":"2026-08-15","total":2,"email":1,"whatsapp":1,"voice":0},{"date":"2026-08-16","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-08-18","total":13,"email":9,"whatsapp":3,"voice":1}],"hour_dist":[4,1,4,7,2,2,3,4,24,12,8,9,6,10,10,12,7,13,3,3,8,8,0,0],"agents":{"Andivia Larissa":78,"Stefani":82},"peak_day":"2026-08-12","peak_day_count":21,"peak_hour":8,"call":{"cof":13,"acd":13,"answer_rate":100.0,"abandon_rate":0.0,"call_aht":378},"fcr":86.6,"csat":95.6,"qa_score":86.1,"occupancy":55.7,"asa":9.6,"nps":71,"ces":3.96,"critical_error_rate":2.8,"compliance_score":89.4,"coaching_completion":85,"call_monitoring_count":18,"repeat_error_rate":6.2,"schedule_adherence":92.9,"attendance":96.0,"utilization":51.0,"acw_sec":31,"hold_sec":26,"idle_sec":177,"month":8,"name":"August","abbr":"Aug","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":82,"csat":79.9,"qa":81.3,"aht":407,"adherence":92.6,"score":83.0},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":78,"csat":82.3,"qa":77.0,"aht":417,"adherence":85.2,"score":80.8}]},"all":{"total":2843,"channels":{"Email":{"count":1422,"pct":50.0},"Whatsapp":{"count":1063,"pct":37.4},"Voice":{"count":358,"pct":12.6}},"avgfrt":676,"avgaht":681,"avgwait":26443,"sl":72.3,"scr":93.5,"complaint_res":100.0,"top_sub":[{"name":"Informasi Umum Penggerak HAM","count":1005,"pct":35.3,"channels":{"Whatsapp":257,"Email":718,"Voice":30}},{"name":"Informasi Pertanyaan Seputar PPPK 2025","count":520,"pct":18.3,"channels":{"Whatsapp":412,"Voice":79,"Email":29}},{"name":"Informasi Umum seputar Kementerian HAM","count":265,"pct":9.3,"channels":{"Whatsapp":65,"Voice":31,"Email":169}},{"name":"Spam/testing/no subject/empty call","count":228,"pct":8.0,"channels":{"Whatsapp":121,"Voice":39,"Email":68}},{"name":"Spam/testing/no subject","count":146,"pct":5.1,"channels":{"Whatsapp":124,"Voice":18,"Email":4}},{"name":"Konfirmasi terkait balasan Email dan WhatsApp","count":85,"pct":3.0,"channels":{"Whatsapp":7,"Email":78}},{"name":"Salah sambung","count":72,"pct":2.5,"channels":{"Whatsapp":8,"Voice":60,"Email":4}},{"name":"Bagaimana cara menyampaikan pengaduan","count":70,"pct":2.5,"channels":{"Voice":11,"Whatsapp":17,"Email":42}}],"top_cat":[{"name":"Informasi Umum","count":1804,"pct":63.5},{"name":"Spam","count":374,"pct":13.2},{"name":"Konfirmasi Email dan WhtsApp","count":85,"pct":3.0},{"name":"Lainnya","count":72,"pct":2.5},{"name":"Undangan","count":61,"pct":2.1},{"name":"Informasi pengaduan umum","count":49,"pct":1.7},{"name":"Permintaan ke KemenHAM","count":49,"pct":1.7},{"name":"Informasi Pengaduan Umum","count":45,"pct":1.6}],"mainCat":{"Informasi":1969,"Lainnya":577,"Permintaan":253,"Pengaduan":44},"sentiment":{"Positive":2835,"Neutral":8},"daily":[{"date":"2026-01-02","total":42,"email":0,"whatsapp":38,"voice":4},{"date":"2026-01-03","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-04","total":6,"email":0,"whatsapp":6,"voice":0},{"date":"2026-01-05","total":20,"email":2,"whatsapp":15,"voice":3},{"date":"2026-01-06","total":12,"email":3,"whatsapp":7,"voice":2},{"date":"2026-01-07","total":16,"email":1,"whatsapp":5,"voice":10},{"date":"2026-01-08","total":13,"email":3,"whatsapp":5,"voice":5},{"date":"2026-01-09","total":11,"email":0,"whatsapp":5,"voice":6},{"date":"2026-01-10","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-12","total":15,"email":1,"whatsapp":3,"voice":11},{"date":"2026-01-13","total":17,"email":5,"whatsapp":5,"voice":7},{"date":"2026-01-14","total":9,"email":1,"whatsapp":4,"voice":4},{"date":"2026-01-15","total":11,"email":0,"whatsapp":8,"voice":3},{"date":"2026-01-19","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-20","total":11,"email":1,"whatsapp":7,"voice":3},{"date":"2026-01-21","total":17,"email":1,"whatsapp":7,"voice":9},{"date":"2026-01-22","total":12,"email":1,"whatsapp":5,"voice":6},{"date":"2026-01-23","total":6,"email":0,"whatsapp":3,"voice":3},{"date":"2026-01-24","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-01-25","total":4,"email":3,"whatsapp":1,"voice":0},{"date":"2026-01-26","total":9,"email":2,"whatsapp":3,"voice":4},{"date":"2026-01-27","total":4,"email":1,"whatsapp":3,"voice":0},{"date":"2026-01-28","total":7,"email":3,"whatsapp":4,"voice":0},{"date":"2026-01-29","total":7,"email":1,"whatsapp":1,"voice":5},{"date":"2026-01-30","total":12,"email":2,"whatsapp":2,"voice":8},{"date":"2026-02-01","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-02-02","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-02-03","total":32,"email":10,"whatsapp":9,"voice":13},{"date":"2026-02-04","total":8,"email":2,"whatsapp":2,"voice":4},{"date":"2026-02-05","total":5,"email":0,"whatsapp":3,"voice":2},{"date":"2026-02-06","total":7,"email":3,"whatsapp":2,"voice":2},{"date":"2026-02-09","total":6,"email":0,"whatsapp":1,"voice":5},{"date":"2026-02-10","total":7,"email":1,"whatsapp":2,"voice":4},{"date":"2026-02-11","total":7,"email":1,"whatsapp":2,"voice":4},{"date":"2026-02-12","total":6,"email":5,"whatsapp":1,"voice":0},{"date":"2026-02-13","total":5,"email":2,"whatsapp":2,"voice":1},{"date":"2026-02-14","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-02-15","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-02-18","total":13,"email":2,"whatsapp":9,"voice":2},{"date":"2026-02-19","total":4,"email":1,"whatsapp":2,"voice":1},{"date":"2026-02-20","total":6,"email":4,"whatsapp":2,"voice":0},{"date":"2026-02-21","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-02-23","total":4,"email":3,"whatsapp":1,"voice":0},{"date":"2026-02-24","total":5,"email":2,"whatsapp":0,"voice":3},{"date":"2026-02-25","total":14,"email":7,"whatsapp":1,"voice":6},{"date":"2026-02-26","total":3,"email":2,"whatsapp":1,"voice":0},{"date":"2026-02-27","total":4,"email":1,"whatsapp":2,"voice":1},{"date":"2026-03-02","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-03-03","total":6,"email":4,"whatsapp":2,"voice":0},{"date":"2026-03-04","total":5,"email":3,"whatsapp":2,"voice":0},{"date":"2026-03-05","total":4,"email":1,"whatsapp":2,"voice":1},{"date":"2026-03-06","total":6,"email":3,"whatsapp":3,"voice":0},{"date":"2026-03-09","total":7,"email":4,"whatsapp":1,"voice":2},{"date":"2026-03-10","total":7,"email":2,"whatsapp":4,"voice":1},{"date":"2026-03-11","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-03-12","total":3,"email":1,"whatsapp":2,"voice":0},{"date":"2026-03-13","total":4,"email":0,"whatsapp":3,"voice":1},{"date":"2026-03-15","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-03-16","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-03-17","total":12,"email":2,"whatsapp":2,"voice":8},{"date":"2026-03-25","total":12,"email":5,"whatsapp":2,"voice":5},{"date":"2026-03-26","total":9,"email":0,"whatsapp":4,"voice":5},{"date":"2026-03-27","total":7,"email":1,"whatsapp":3,"voice":3},{"date":"2026-03-28","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-03-30","total":5,"email":2,"whatsapp":2,"voice":1},{"date":"2026-03-31","total":5,"email":2,"whatsapp":1,"voice":2},{"date":"2026-04-01","total":4,"email":0,"whatsapp":2,"voice":2},{"date":"2026-04-02","total":5,"email":3,"whatsapp":1,"voice":1},{"date":"2026-04-05","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-04-06","total":12,"email":9,"whatsapp":1,"voice":2},{"date":"2026-04-07","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-04-08","total":8,"email":5,"whatsapp":2,"voice":1},{"date":"2026-04-09","total":4,"email":0,"whatsapp":2,"voice":2},{"date":"2026-04-10","total":5,"email":1,"whatsapp":3,"voice":1},{"date":"2026-04-11","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-04-13","total":9,"email":4,"whatsapp":2,"voice":3},{"date":"2026-04-14","total":3,"email":1,"whatsapp":1,"voice":1},{"date":"2026-04-15","total":9,"email":2,"whatsapp":4,"voice":3},{"date":"2026-04-16","total":6,"email":0,"whatsapp":2,"voice":4},{"date":"2026-04-17","total":11,"email":1,"whatsapp":3,"voice":7},{"date":"2026-04-20","total":2,"email":0,"whatsapp":2,"voice":0},{"date":"2026-04-21","total":8,"email":1,"whatsapp":5,"voice":2},{"date":"2026-04-22","total":6,"email":3,"whatsapp":2,"voice":1},{"date":"2026-04-23","total":5,"email":2,"whatsapp":3,"voice":0},{"date":"2026-04-24","total":16,"email":4,"whatsapp":12,"voice":0},{"date":"2026-04-25","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-04-26","total":3,"email":1,"whatsapp":2,"voice":0},{"date":"2026-04-27","total":40,"email":0,"whatsapp":38,"voice":2},{"date":"2026-04-28","total":45,"email":2,"whatsapp":40,"voice":3},{"date":"2026-04-29","total":27,"email":2,"whatsapp":24,"voice":1},{"date":"2026-04-30","total":34,"email":1,"whatsapp":31,"voice":2},{"date":"2026-05-04","total":33,"email":7,"whatsapp":23,"voice":3},{"date":"2026-05-05","total":21,"email":4,"whatsapp":17,"voice":0},{"date":"2026-05-06","total":9,"email":1,"whatsapp":8,"voice":0},{"date":"2026-05-07","total":7,"email":2,"whatsapp":4,"voice":1},{"date":"2026-05-08","total":13,"email":6,"whatsapp":5,"voice":2},{"date":"2026-05-10","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-05-11","total":10,"email":5,"whatsapp":3,"voice":2},{"date":"2026-05-12","total":11,"email":6,"whatsapp":3,"voice":2},{"date":"2026-05-13","total":6,"email":1,"whatsapp":4,"voice":1},{"date":"2026-05-16","total":1,"email":0,"whatsapp":1,"voice":0},{"date":"2026-05-17","total":5,"email":5,"whatsapp":0,"voice":0},{"date":"2026-05-18","total":13,"email":8,"whatsapp":2,"voice":3},{"date":"2026-05-19","total":10,"email":6,"whatsapp":3,"voice":1},{"date":"2026-05-20","total":6,"email":3,"whatsapp":3,"voice":0},{"date":"2026-05-21","total":7,"email":2,"whatsapp":5,"voice":0},{"date":"2026-05-22","total":10,"email":4,"whatsapp":5,"voice":1},{"date":"2026-05-25","total":14,"email":5,"whatsapp":7,"voice":2},{"date":"2026-05-26","total":10,"email":3,"whatsapp":5,"voice":2},{"date":"2026-05-29","total":6,"email":1,"whatsapp":5,"voice":0},{"date":"2026-05-30","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-05-31","total":2,"email":1,"whatsapp":1,"voice":0},{"date":"2026-06-02","total":12,"email":5,"whatsapp":4,"voice":3},{"date":"2026-06-03","total":9,"email":4,"whatsapp":4,"voice":1},{"date":"2026-06-04","total":8,"email":2,"whatsapp":4,"voice":2},{"date":"2026-06-05","total":5,"email":1,"whatsapp":2,"voice":2},{"date":"2026-06-06","total":3,"email":3,"whatsapp":0,"voice":0},{"date":"2026-06-07","total":3,"email":2,"whatsapp":1,"voice":0},{"date":"2026-06-08","total":10,"email":5,"whatsapp":5,"voice":0},{"date":"2026-06-09","total":9,"email":5,"whatsapp":2,"voice":2},{"date":"2026-06-10","total":8,"email":3,"whatsapp":4,"voice":1},{"date":"2026-06-11","total":23,"email":7,"whatsapp":14,"voice":2},{"date":"2026-06-12","total":29,"email":18,"whatsapp":11,"voice":0},{"date":"2026-06-13","total":6,"email":6,"whatsapp":0,"voice":0},{"date":"2026-06-14","total":14,"email":8,"whatsapp":6,"voice":0},{"date":"2026-06-15","total":38,"email":20,"whatsapp":16,"voice":2},{"date":"2026-06-16","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-06-17","total":67,"email":30,"whatsapp":34,"voice":3},{"date":"2026-06-18","total":27,"email":18,"whatsapp":7,"voice":2},{"date":"2026-06-19","total":37,"email":20,"whatsapp":14,"voice":3},{"date":"2026-06-20","total":101,"email":101,"whatsapp":0,"voice":0},{"date":"2026-06-21","total":54,"email":39,"whatsapp":15,"voice":0},{"date":"2026-06-22","total":122,"email":71,"whatsapp":47,"voice":4},{"date":"2026-06-23","total":118,"email":53,"whatsapp":55,"voice":10},{"date":"2026-06-24","total":190,"email":133,"whatsapp":40,"voice":17},{"date":"2026-06-25","total":63,"email":49,"whatsapp":9,"voice":5},{"date":"2026-06-26","total":32,"email":24,"whatsapp":6,"voice":2},{"date":"2026-06-27","total":8,"email":8,"whatsapp":0,"voice":0},{"date":"2026-06-28","total":10,"email":8,"whatsapp":2,"voice":0},{"date":"2026-06-29","total":23,"email":11,"whatsapp":10,"voice":2},{"date":"2026-06-30","total":25,"email":19,"whatsapp":3,"voice":3},{"date":"2026-07-01","total":112,"email":74,"whatsapp":32,"voice":6},{"date":"2026-07-02","total":65,"email":40,"whatsapp":20,"voice":5},{"date":"2026-07-03","total":29,"email":15,"whatsapp":13,"voice":1},{"date":"2026-07-04","total":9,"email":9,"whatsapp":0,"voice":0},{"date":"2026-07-05","total":13,"email":11,"whatsapp":2,"voice":0},{"date":"2026-07-06","total":46,"email":28,"whatsapp":15,"voice":3},{"date":"2026-07-07","total":24,"email":18,"whatsapp":5,"voice":1},{"date":"2026-07-08","total":20,"email":14,"whatsapp":3,"voice":3},{"date":"2026-07-09","total":30,"email":22,"whatsapp":6,"voice":2},{"date":"2026-07-10","total":25,"email":17,"whatsapp":6,"voice":2},{"date":"2026-07-11","total":6,"email":6,"whatsapp":0,"voice":0},{"date":"2026-07-12","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-07-13","total":17,"email":8,"whatsapp":7,"voice":2},{"date":"2026-07-14","total":11,"email":6,"whatsapp":4,"voice":1},{"date":"2026-07-15","total":7,"email":3,"whatsapp":4,"voice":0},{"date":"2026-07-16","total":16,"email":9,"whatsapp":6,"voice":1},{"date":"2026-07-17","total":8,"email":3,"whatsapp":5,"voice":0},{"date":"2026-07-18","total":12,"email":12,"whatsapp":0,"voice":0},{"date":"2026-07-19","total":4,"email":2,"whatsapp":2,"voice":0},{"date":"2026-07-20","total":25,"email":13,"whatsapp":10,"voice":2},{"date":"2026-07-21","total":22,"email":14,"whatsapp":6,"voice":2},{"date":"2026-07-22","total":16,"email":10,"whatsapp":6,"voice":0},{"date":"2026-07-23","total":17,"email":8,"whatsapp":6,"voice":3},{"date":"2026-07-24","total":8,"email":4,"whatsapp":3,"voice":1},{"date":"2026-07-25","total":5,"email":5,"whatsapp":0,"voice":0},{"date":"2026-07-26","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-07-27","total":18,"email":10,"whatsapp":7,"voice":1},{"date":"2026-07-28","total":15,"email":7,"whatsapp":6,"voice":2},{"date":"2026-07-29","total":25,"email":12,"whatsapp":10,"voice":3},{"date":"2026-07-30","total":17,"email":9,"whatsapp":5,"voice":3},{"date":"2026-07-31","total":12,"email":7,"whatsapp":4,"voice":1},{"date":"2026-08-01","total":8,"email":8,"whatsapp":0,"voice":0},{"date":"2026-08-02","total":4,"email":4,"whatsapp":0,"voice":0},{"date":"2026-08-03","total":7,"email":3,"whatsapp":3,"voice":1},{"date":"2026-08-04","total":8,"email":5,"whatsapp":3,"voice":0},{"date":"2026-08-05","total":19,"email":11,"whatsapp":7,"voice":1},{"date":"2026-08-06","total":5,"email":4,"whatsapp":1,"voice":0},{"date":"2026-08-07","total":15,"email":10,"whatsapp":2,"voice":3},{"date":"2026-08-08","total":1,"email":1,"whatsapp":0,"voice":0},{"date":"2026-08-09","total":6,"email":6,"whatsapp":0,"voice":0},{"date":"2026-08-10","total":12,"email":4,"whatsapp":6,"voice":2},{"date":"2026-08-11","total":10,"email":3,"whatsapp":6,"voice":1},{"date":"2026-08-12","total":21,"email":15,"whatsapp":3,"voice":3},{"date":"2026-08-13","total":12,"email":8,"whatsapp":3,"voice":1},{"date":"2026-08-14","total":15,"email":10,"whatsapp":2,"voice":3},{"date":"2026-08-15","total":2,"email":1,"whatsapp":1,"voice":0},{"date":"2026-08-16","total":2,"email":2,"whatsapp":0,"voice":0},{"date":"2026-08-18","total":13,"email":9,"whatsapp":3,"voice":1}],"hour_dist":[32,21,23,16,24,26,34,89,260,251,248,209,172,177,222,181,145,137,123,165,123,64,65,36],"agents":{"Stefani":1409,"Andivia Larissa":1433},"peak_day":"2026-06-24","peak_day_count":190,"peak_hour":8,"call":{"cof":297,"acd":296,"answer_rate":99.7,"abandon_rate":3.8,"call_aht":241},"fcr":80.96,"csat":94.79,"qa_score":85.89,"occupancy":75.75,"asa":14.74,"nps":68.17,"ces":3.74,"critical_error_rate":3.05,"compliance_score":90.57,"coaching_completion":74.91,"call_monitoring_count":22.7,"repeat_error_rate":5.98,"schedule_adherence":89.82,"attendance":95.8,"utilization":71.63,"acw_sec":38.7,"hold_sec":30.72,"idle_sec":145.93,"month":"all","name":"YTD (Jan\u2013Aug 2026)","abbr":"YTD","workforce":[{"name":"Stefani","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":1409,"csat":80.4,"qa":80.2,"aht":618,"adherence":96.1,"score":83.5},{"name":"Andivia Larissa","role":"Agent Layanan \u2014 Email, WhatsApp & Voice","tickets":1433,"csat":83.8,"qa":75.9,"aht":783,"adherence":86.2,"score":81.1}]}}};
+</script>
+<script>
+/* ==========================================================================
+   Contact Center Executive Dashboard — Kementerian HAM
+   Application logic: rendering, filters, charts (canvas, no external libs)
+   ========================================================================== */
+(function(){
+"use strict";
+
+/* ---------------------------------------------------------------------- */
+/* 0. THEME                                                                */
+/* ---------------------------------------------------------------------- */
+var themeState = 'system'; // 'system' | 'light' | 'dark'
+function applyTheme(){
+  var root = document.documentElement;
+  if(themeState === 'system'){ root.removeAttribute('data-theme'); }
+  else { root.setAttribute('data-theme', themeState); }
+  var dark = themeState === 'dark' || (themeState === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.getElementById('iconSun').style.display = dark ? 'none' : 'block';
+  document.getElementById('iconMoon').style.display = dark ? 'block' : 'none';
+}
+document.getElementById('themeToggle').addEventListener('click', function(){
+  var dark = themeState === 'dark' || (themeState === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  themeState = dark ? 'light' : 'dark';
+  applyTheme();
+  requestAnimationFrame(renderAll);
+});
+applyTheme();
+document.getElementById('brandLogo').src = 'data:image/png;base64,' + LOGO_B64;
+
+/* ---------------------------------------------------------------------- */
+/* 1. STATE & CONSTANTS                                                    */
+/* ---------------------------------------------------------------------- */
+var MONTHS = DATA.meta.months; // [1..8]
+var MONTH_NAME = DATA.meta.month_names;
+var state = { month: 'all', gran: 'monthly' };
+
+var TARGETS = DATA.targets;
+var CH_COLOR = { email:'--c-email', whatsapp:'--c-whatsapp', voice:'--c-voice' };
+var CH_LABEL = { email:'Email', whatsapp:'WhatsApp', voice:'Voice' };
+
+function css(varName){ return getComputedStyle(document.documentElement).getPropertyValue(varName).trim(); }
+function fmtInt(n){ return Math.round(n).toLocaleString('id-ID'); }
+function fmt1(n){ return (Math.round(n*10)/10).toLocaleString('id-ID', {minimumFractionDigits:1, maximumFractionDigits:1}); }
+function fmtPct(n){ return fmt1(n) + '%'; }
+function fmtSec(s){
+  s = Math.round(s);
+  if(s < 60) return s + 's';
+  var h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  if(h>0) return h+'h '+m+'m';
+  return m+'m '+sec+'s';
+}
+function fmtSecClock(s){
+  s = Math.round(s);
+  var h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  function p(x){ return (x<10?'0':'')+x; }
+  return p(h)+':'+p(m)+':'+p(sec);
+}
+function monthLabel(m){ return m==='all' ? 'YTD (Jan–Agu)' : DATA.periods[m].name + ' 2026'; }
+function periodOf(m){ return DATA.periods[String(m)]; }
+function prevOf(m){
+  if(m === 'all') return null;
+  var mi = parseInt(m,10);
+  if(mi <= 1) return null;
+  return DATA.periods[String(mi-1)];
+}
+
+/* ---------------------------------------------------------------------- */
+/* 2. KPI DEFINITIONS                                                      */
+/* ---------------------------------------------------------------------- */
+// direction: true = higher is better
+function kpiVolumeTarget(p){
+  var perMonth = Math.round(DATA.periods['all'].total / 8);
+  return p.month === 'all' ? perMonth*8 : perMonth;
+}
+function achievement(actual, target, higherBetter){
+  if(target === 0) return 100;
+  if(higherBetter) return (actual/target)*100;
+  if(actual <= 0) return 130;
+  return (target/actual)*100;
+}
+function statusFromAchv(a){
+  if(a >= 100) return 'good';
+  if(a >= 90) return 'warning';
+  return 'critical';
+}
+function statusColorVar(status){
+  return { good:'--good', warning:'--warning', critical:'--critical', info:'--info' }[status];
+}
+function statusBgVar(status){
+  return { good:'--good-bg', warning:'--warning-bg', critical:'--critical-bg', info:'--info-bg' }[status];
+}
+
+function buildKPIList(p, prev){
+  var list = [];
+
+  // 1. Total Interaction Volume
+  (function(){
+    var target = kpiVolumeTarget(p);
+    var a = achievement(p.total, target, true);
+    var trendVal = prev ? ((p.total - prev.total)/prev.total*100) : null;
+    list.push({ key:'volume', label:'Total Interaction Volume', value:fmtInt(p.total), unit:'tiket',
+      actual:p.total, target:fmtInt(target)+' tiket', achv:a, status:'info',
+      trend:trendVal, trendUnit:'%', higherBetter:true });
+  })();
+  // 2. Service Level
+  (function(){
+    var a = achievement(p.sl, TARGETS.sl, true);
+    var trendVal = prev ? (p.sl - prev.sl) : null;
+    list.push({ key:'sl', label:'Service Level (SL)', value:fmtPct(p.sl), unit:'',
+      actual:p.sl, target:TARGETS.sl+'%', achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'pp', higherBetter:true });
+  })();
+  // 3. Service Completion Rate
+  (function(){
+    var a = achievement(p.scr, TARGETS.scr, true);
+    var trendVal = prev ? (p.scr - prev.scr) : null;
+    list.push({ key:'scr', label:'Service Completion Rate', value:fmtPct(p.scr), unit:'',
+      actual:p.scr, target:TARGETS.scr+'%', achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'pp', higherBetter:true });
+  })();
+  // 4. Answer Rate
+  (function(){
+    var ar = p.call.answer_rate;
+    var pr = prev ? prev.call.answer_rate : null;
+    var a = achievement(ar, TARGETS.answer_rate, true);
+    list.push({ key:'answer', label:'Answer Rate', value:fmtPct(ar), unit:'',
+      actual:ar, target:TARGETS.answer_rate+'%', achv:a, status:statusFromAchv(a),
+      trend: pr!==null ? (ar-pr) : null, trendUnit:'pp', higherBetter:true });
+  })();
+  // 5. Abandonment Rate
+  (function(){
+    var ab = p.call.abandon_rate;
+    var pr = prev ? prev.call.abandon_rate : null;
+    var a = achievement(ab, TARGETS.abandon_rate, false);
+    list.push({ key:'abandon', label:'Abandonment Rate', value:fmtPct(ab), unit:'',
+      actual:ab, target:'≤ '+TARGETS.abandon_rate+'%', achv:a, status:statusFromAchv(a),
+      trend: pr!==null ? (ab-pr) : null, trendUnit:'pp', higherBetter:false });
+  })();
+  // 6. AHT
+  (function(){
+    var a = achievement(p.avgaht, TARGETS.aht, false);
+    var trendVal = prev ? ((p.avgaht - prev.avgaht)/prev.avgaht*100) : null;
+    list.push({ key:'aht', label:'Average Handling Time', value:fmtSec(p.avgaht), unit:'',
+      actual:p.avgaht, target:'≤ '+fmtSec(TARGETS.aht), achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'%', higherBetter:false });
+  })();
+  // 7. FCR
+  (function(){
+    var a = achievement(p.fcr, TARGETS.fcr, true);
+    var trendVal = prev ? (p.fcr - prev.fcr) : null;
+    list.push({ key:'fcr', label:'First Contact Resolution', value:fmtPct(p.fcr), unit:'',
+      actual:p.fcr, target:TARGETS.fcr+'%', achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'pp', higherBetter:true });
+  })();
+  // 8. CSAT
+  (function(){
+    var a = achievement(p.csat, TARGETS.csat, true);
+    var trendVal = prev ? (p.csat - prev.csat) : null;
+    list.push({ key:'csat', label:'Customer Satisfaction', value:fmtPct(p.csat), unit:'',
+      actual:p.csat, target:TARGETS.csat+'%', achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'pp', higherBetter:true });
+  })();
+  // 9. QA Score
+  (function(){
+    var a = achievement(p.qa_score, TARGETS.qa_score, true);
+    var trendVal = prev ? (p.qa_score - prev.qa_score) : null;
+    list.push({ key:'qa', label:'Quality Assurance Score', value:fmtPct(p.qa_score), unit:'',
+      actual:p.qa_score, target:TARGETS.qa_score+'%', achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'pp', higherBetter:true });
+  })();
+  // 10. Occupancy
+  (function(){
+    var diff = p.occupancy - TARGETS.occupancy;
+    var status = 'good';
+    if(diff > 8) status = 'warning'; else if(diff < -15) status = 'warning'; if(diff > 15) status='critical';
+    var a = (p.occupancy/TARGETS.occupancy)*100;
+    var trendVal = prev ? (p.occupancy - prev.occupancy) : null;
+    list.push({ key:'occupancy', label:'Occupancy', value:fmtPct(p.occupancy), unit:'',
+      actual:p.occupancy, target:'≈ '+TARGETS.occupancy+'%', achv:a, status:status,
+      trend:trendVal, trendUnit:'pp', higherBetter:true, note: diff>8 ? 'Beban agent tinggi' : (diff<-15 ? 'Kapasitas idle' : null) });
+  })();
+  // 11. ASA
+  (function(){
+    var a = achievement(p.asa, TARGETS.asa, false);
+    var trendVal = prev ? ((p.asa - prev.asa)/prev.asa*100) : null;
+    list.push({ key:'asa', label:'Avg Speed of Answer', value:fmt1(p.asa)+'s', unit:'',
+      actual:p.asa, target:'≤ '+TARGETS.asa+'s', achv:a, status:statusFromAchv(a),
+      trend:trendVal, trendUnit:'%', higherBetter:false });
+  })();
+  // 12. Complaint Resolution Rate
+  (function(){
+    var cr = p.complaint_res === null ? DATA.periods['all'].complaint_res : p.complaint_res;
+    var prcr = prev ? (prev.complaint_res===null?null:prev.complaint_res) : null;
+    var a = achievement(cr, TARGETS.complaint_res, true);
+    list.push({ key:'complaint', label:'Complaint Resolution Rate', value:fmtPct(cr), unit:'',
+      actual:cr, target:TARGETS.complaint_res+'%', achv:a, status:statusFromAchv(a),
+      trend: prcr!==null ? (cr-prcr) : null, trendUnit:'pp', higherBetter:true });
+  })();
+
+  return list;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 3. GENERIC CANVAS CHART HELPERS                                         */
+/* ---------------------------------------------------------------------- */
+function fitCanvas(canvas){
+  var rect = canvas.getBoundingClientRect();
+  var dpr = window.devicePixelRatio || 1;
+  var w = Math.max(rect.width, 200);
+  var h = canvas.getAttribute('height') ? parseInt(canvas.getAttribute('height'),10) : Math.max(rect.height,120);
+  canvas.width = w*dpr; canvas.height = h*dpr;
+  canvas.style.width = w+'px'; canvas.style.height = h+'px';
+  var ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return { ctx:ctx, w:w, h:h };
+}
+
+function niceMax(v){
+  if(v<=0) return 10;
+  var mag = Math.pow(10, Math.floor(Math.log10(v)));
+  var n = v/mag;
+  var steps = [1,1.2,1.5,2,2.5,3,4,5,6,8,10];
+  var f = 10;
+  for(var i=0;i<steps.length;i++){ if(n<=steps[i]){ f = steps[i]; break; } }
+  return f*mag;
+}
+
+/* Combo chart: grouped/overlaid bars + lines, shared category x-axis */
+function drawCombo(canvas, opts){
+  var fit = fitCanvas(canvas), ctx = fit.ctx, W = fit.w, H = fit.h;
+  ctx.clearRect(0,0,W,H);
+  var labels = opts.labels, bars = opts.bars||[], lines = opts.lines||[];
+  var padL = 40, padR = 14, padT = 14, padB = labels.length>16? 34: 26;
+  var plotW = W-padL-padR, plotH = H-padT-padB;
+  var maxVal = 0;
+  bars.forEach(function(s){ s.data.forEach(function(v){ maxVal = Math.max(maxVal, v); }); });
+  lines.forEach(function(s){ s.data.forEach(function(v){ maxVal = Math.max(maxVal, v); }); });
+  var yMax = niceMax(maxVal*1.15 || 10);
+  var n = labels.length;
+  var slot = plotW/n;
+  var gridColor = css('--border'); var inkMuted = css('--ink-3'); var ink2 = css('--ink-2');
+
+  // gridlines + y labels
+  ctx.strokeStyle = gridColor; ctx.lineWidth = 1; ctx.font = '10px IBM Plex Sans, sans-serif'; ctx.fillStyle = inkMuted;
+  var steps = 4;
+  for(var i=0;i<=steps;i++){
+    var yv = yMax*i/steps;
+    var y = padT + plotH - (yv/yMax)*plotH;
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+    ctx.textAlign = 'right'; ctx.textBaseline='middle';
+    ctx.fillText(Math.round(yv).toLocaleString('id-ID'), padL-8, y);
+  }
+  // x labels (skip to avoid crowding)
+  var labelSkip = Math.ceil(n / (plotW/46));
+  ctx.textAlign='center'; ctx.textBaseline='top'; ctx.fillStyle = inkMuted;
+  for(var i=0;i<n;i+=labelSkip){
+    var x = padL + slot*i + slot/2;
+    ctx.fillText(labels[i], x, padT+plotH+8);
+  }
+
+  var barGroupW = slot*0.62;
+  var barW = barGroupW/Math.max(bars.length,1);
+  // bars
+  bars.forEach(function(s, si){
+    ctx.fillStyle = s.color;
+    for(var i=0;i<n;i++){
+      var v = s.data[i]||0;
+      var bh = (v/yMax)*plotH;
+      var x = padL + slot*i + (slot-barGroupW)/2 + si*barW;
+      var y = padT+plotH-bh;
+      var r = Math.min(3, barW/2, bh);
+      roundRectTop(ctx, x+1, y, Math.max(barW-2,1), bh, r);
+      ctx.fill();
+    }
+  });
+  // lines
+  lines.forEach(function(s){
+    ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.beginPath();
+    for(var i=0;i<n;i++){
+      var v = s.data[i]||0;
+      var x = padL + slot*i + slot/2;
+      var y = padT+plotH-(v/yMax)*plotH;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = s.color;
+    for(var i=0;i<n;i+=Math.max(1,Math.ceil(n/24))){
+      var v = s.data[i]||0;
+      var x = padL + slot*i + slot/2;
+      var y = padT+plotH-(v/yMax)*plotH;
+      ctx.beginPath(); ctx.arc(x,y,2.4,0,7); ctx.fill();
+    }
+  });
+
+  return { padL:padL, padR:padR, padT:padT, padB:padB, plotW:plotW, plotH:plotH, yMax:yMax, n:n, slot:slot, W:W, H:H };
+}
+function roundRectTop(ctx,x,y,w,h,r){
+  if(h<=0){ return; }
+  r = Math.min(r, w/2, h);
+  ctx.beginPath();
+  ctx.moveTo(x, y+h);
+  ctx.lineTo(x, y+r);
+  ctx.arcTo(x,y,x+r,y,r);
+  ctx.lineTo(x+w-r,y);
+  ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h);
+  ctx.closePath();
+}
+
+function attachComboTooltip(canvas, tooltipEl, geomRef, labels, seriesAll, fmt){
+  canvas.onmousemove = function(e){
+    var rect = canvas.getBoundingClientRect();
+    var x = e.clientX-rect.left;
+    var geom = geomRef();
+    var idx = Math.round((x-geom.padL-geom.slot/2)/geom.slot);
+    idx = Math.max(0, Math.min(labels.length-1, idx));
+    var html = '<b>'+labels[idx]+'</b><br/>';
+    seriesAll().forEach(function(s){
+      html += '<span style="color:'+s.color+'">●</span> '+s.label+': <b>'+fmt(s.data[idx])+'</b><br/>';
+    });
+    tooltipEl.innerHTML = html;
+    tooltipEl.style.opacity = 1;
+    tooltipEl.style.left = (x)+'px';
+    tooltipEl.style.top = (idx>=0? (geom.padT+ 6):0)+'px';
+  };
+  canvas.onmouseleave = function(){ tooltipEl.style.opacity = 0; };
+}
+
+/* Doughnut chart */
+function drawDoughnut(canvas, items, tooltipEl){
+  var fit = fitCanvas(canvas), ctx = fit.ctx, W = fit.w, H = fit.h;
+  ctx.clearRect(0,0,W,H);
+  var cx = W/2, cy = H/2, rOuter = Math.min(W,H)/2 - 6, rInner = rOuter*0.62;
+  var total = items.reduce(function(a,b){ return a+b.value; },0) || 1;
+  var start = -Math.PI/2;
+  var segs = [];
+  items.forEach(function(it){
+    var frac = it.value/total;
+    var end = start + frac*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,rOuter,start,end);
+    ctx.closePath();
+    ctx.fillStyle = it.color;
+    ctx.fill();
+    segs.push({start:start,end:end,item:it});
+    start = end;
+  });
+  // inner hole (cutout) painted with surface color
+  ctx.beginPath(); ctx.arc(cx,cy,rInner,0,Math.PI*2); ctx.fillStyle = css('--surface'); ctx.fill();
+  // center label
+  ctx.fillStyle = css('--ink-1'); ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font = '700 15px Manrope, sans-serif';
+  ctx.fillText(fmtInt(total), cx, cy-6);
+  ctx.font = '600 9.5px IBM Plex Sans, sans-serif'; ctx.fillStyle = css('--ink-3');
+  ctx.fillText('TOTAL', cx, cy+11);
+
+  canvas.onmousemove = function(e){
+    var rect = canvas.getBoundingClientRect();
+    var x = e.clientX-rect.left-cx, y = e.clientY-rect.top-cy;
+    var dist = Math.sqrt(x*x+y*y);
+    if(dist<rInner || dist>rOuter){ tooltipEl.style.opacity=0; return; }
+    var ang = Math.atan2(y,x);
+    if(ang < -Math.PI/2) ang += Math.PI*2;
+    var found = segs.find(function(s){ return ang>=s.start && ang<=s.end; });
+    if(found){
+      tooltipEl.innerHTML = '<b>'+found.item.label+'</b><br/>'+fmtInt(found.item.value)+' ('+fmt1(100*found.item.value/total)+'%)';
+      tooltipEl.style.opacity=1;
+      tooltipEl.style.left = (e.clientX-rect.left)+'px';
+      tooltipEl.style.top = (e.clientY-rect.top)+'px';
+    } else tooltipEl.style.opacity=0;
+  };
+  canvas.onmouseleave = function(){ tooltipEl.style.opacity=0; };
+}
+
+function renderLegend(el, items){
+  el.innerHTML = items.map(function(it){
+    return '<span class="legend-item"><span class="legend-dot" style="background:'+it.color+'"></span>'+it.label+'</span>';
+  }).join('');
+}
+
+/* Gauge (semi-circle arc) */
+function drawGauge(container, value, max, statusColor){
+  var pct = Math.max(0,Math.min(1, value/max));
+  var r = 72, cx=90, cy=90, sw=14;
+  var startAngle = Math.PI, endAngle = Math.PI + pct*Math.PI;
+  function polar(cx,cy,r,ang){ return { x:cx+r*Math.cos(ang), y:cy+r*Math.sin(ang) }; }
+  var trackStart = polar(cx,cy,r,Math.PI), trackEnd = polar(cx,cy,r,Math.PI*2);
+  var p0 = polar(cx,cy,r,startAngle), p1 = polar(cx,cy,r,endAngle);
+  var largeArc = pct > 0.5 ? 1 : 0;
+  var svg = '<svg width="180" height="104" viewBox="0 0 180 104">' +
+    '<path d="M '+ (cx-r) +' '+cy+' A '+r+' '+r+' 0 1 1 '+(cx+r)+' '+cy+'" fill="none" stroke="'+css('--paper-3')+'" stroke-width="'+sw+'" stroke-linecap="round"/>' +
+    '<path d="M '+p0.x+' '+p0.y+' A '+r+' '+r+' 0 '+largeArc+' 1 '+p1.x+' '+p1.y+'" fill="none" stroke="'+statusColor+'" stroke-width="'+sw+'" stroke-linecap="round"/>' +
+    '<text x="90" y="86" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="800" font-size="30" fill="'+css('--ink-1')+'">'+Math.round(value)+'%</text>' +
+    '</svg>';
+  container.innerHTML = svg;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 4. RENDER: KPI CARDS                                                    */
+/* ---------------------------------------------------------------------- */
+function trendHTML(k){
+  if(k.trend === null || k.trend === undefined || isNaN(k.trend)){
+    return '<span class="kpi-trend trend-flat">— vs bulan lalu</span>';
+  }
+  var up = k.trend > 0.001, down = k.trend < -0.001;
+  var goodDir = k.higherBetter ? up : down;
+  var flat = !up && !down;
+  var cls = flat ? 'trend-flat' : (goodDir ? 'trend-up' : 'trend-down');
+  var arrow = flat ? '—' : (up ? '▲' : '▼');
+  var val = Math.abs(k.trend);
+  var suffix = k.trendUnit === 'pp' ? 'pp' : '%';
+  return '<span class="kpi-trend '+cls+'">'+arrow+' '+fmt1(val)+suffix+' vs bulan lalu</span>';
+}
+function pillLabel(status){
+  return { good:'ACHIEVED', warning:'ATTENTION', critical:'BELOW TARGET', info:'INFO' }[status];
+}
+function renderKPICards(p, prev){
+  var list = buildKPIList(p, prev);
+  var html = list.map(function(k){
+    var accent = css(statusColorVar(k.status));
+    var barPct = Math.max(4, Math.min(100, k.achv));
+    return '<div class="kpi-card" style="--accent:'+accent+'">' +
+      '<div class="kpi-top"><span class="kpi-label">'+k.label+'</span>' +
+      '<span class="kpi-pill" style="--pillbg:'+css(statusBgVar(k.status))+';--pillfg:'+accent+'">'+pillLabel(k.status)+'</span></div>' +
+      '<div class="kpi-value">'+k.value+'</div>' +
+      '<div class="kpi-meta"><span>Target: <b>'+k.target+'</b></span><span>Achv: <b>'+fmt1(k.achv)+'%</b></span></div>' +
+      '<div class="kpi-bar"><i style="width:'+barPct+'%"></i></div>' +
+      '<div style="margin-top:7px;">'+trendHTML(k)+'</div>' +
+      (k.note? '<div style="font-size:10px;color:var(--warning);margin-top:4px;font-weight:700;">'+k.note+'</div>':'') +
+      '</div>';
+  }).join('');
+  document.getElementById('kpiGrid').innerHTML = html;
+  return list;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 5. RENDER: EXECUTIVE SUMMARY                                            */
+/* ---------------------------------------------------------------------- */
+function overallIndex(kpiList){
+  var vals = kpiList.filter(function(k){ return k.key!=='volume'; }).map(function(k){ return Math.min(100,Math.max(0,k.achv)); });
+  return vals.reduce(function(a,b){return a+b;},0)/vals.length;
+}
+function renderExecSummary(p, prev, kpiList){
+  var idx = overallIndex(kpiList);
+  var status = idx>=95 ? {t:'HEALTHY',c:'good'} : idx>=85 ? {t:'ATTENTION',c:'warning'} : {t:'CRITICAL',c:'critical'};
+  drawGauge(document.getElementById('gaugeSvgWrap'), idx, 100, css(statusColorVar(status.c)));
+  var gs = document.getElementById('gaugeStatus');
+  gs.textContent = status.t; gs.style.background = css(statusBgVar(status.c)); gs.style.color = css(statusColorVar(status.c));
+
+  // channel doughnut
+  var items = ['email','whatsapp','voice'].map(function(c){
+    return { label:CH_LABEL[c], value:p.channels[c[0].toUpperCase()+c.slice(1)].count, color:css(CH_COLOR[c]) };
+  });
+  drawDoughnut(document.getElementById('channelDoughnut'), items, document.getElementById('doughnutTooltip'));
+  renderLegend(document.getElementById('doughnutLegend'), items.map(function(i){
+    return { color:i.color, label:i.label+' · '+fmtInt(i.value) };
+  }));
+  document.getElementById('doughnutTotalTag').textContent = fmtInt(p.total)+' tiket';
+
+  // pace stats
+  var ytd = DATA.periods['all'];
+  var ytdIdx = overallIndex(buildKPIList(ytd, null));
+  var mtdLabel = p.month==='all' ? 'Seluruh Periode' : p.name+' 2026';
+  var mtdIdx = idx;
+  var vsPrevMonth;
+  if(prev){
+    vsPrevMonth = idx - overallIndex(buildKPIList(prev, prevOf(prev.month)));
+  } else if(p.month === 'all') {
+    var augP = DATA.periods['8'], julP = DATA.periods['7'];
+    vsPrevMonth = overallIndex(buildKPIList(augP, julP)) - overallIndex(buildKPIList(julP, DATA.periods['6']));
+  } else {
+    vsPrevMonth = null;
+  }
+  var vsPrevLabel = p.month==='all' ? '(Agu vs Jul 2026)' : (prev ? 'dari '+prev.name : '');
+  var paceHtml = '';
+  paceHtml += statTile('Month-to-Date Performance', fmt1(mtdIdx)+'%', mtdLabel);
+  paceHtml += statTile('Year-to-Date Performance', fmt1(ytdIdx)+'%', 'Jan–Agu 2026 · '+fmtInt(ytd.total)+' tiket');
+  paceHtml += statTile('vs Previous Month', vsPrevMonth===null? '—' : (vsPrevMonth>=0?'+':'')+fmt1(vsPrevMonth)+'pp', vsPrevMonth===null? 'Tidak ada bulan pembanding' : (vsPrevMonth>=0? 'Membaik ':'Menurun ')+vsPrevLabel);
+  paceHtml += statTile('vs Previous Year', 'N/A', 'Tahun pertama pelacakan omnichannel digital');
+  document.getElementById('paceStats').innerHTML = paceHtml;
+
+  var above = kpiList.filter(function(k){ return k.key!=='volume' && k.status==='good'; }).length;
+  var below = kpiList.filter(function(k){ return k.key!=='volume' && k.status!=='good'; }).length;
+  document.getElementById('kpiAboveCount').textContent = above+' dari '+(kpiList.length-1);
+  document.getElementById('kpiBelowCount').textContent = below+' dari '+(kpiList.length-1);
+
+  // top 5 detail subcategory all channel
+  var top5 = p.top_sub.slice(0,5);
+  document.getElementById('top5SubSub').textContent = 'Periode: '+mtdLabel;
+  document.getElementById('top5SubList').innerHTML = top5.map(function(s,i){
+    return '<div class="agent-row"><div class="agent-rank">'+(i+1)+'</div>' +
+      '<div class="agent-info"><div class="agent-name" title="'+escapeHtml(s.name)+'">'+escapeHtml(s.name)+'</div>' +
+      '<div class="agent-role">'+Object.keys(s.channels).map(function(c){return c+' '+s.channels[c];}).join(' · ')+'</div></div>' +
+      '<div class="agent-bar-wrap"><div class="agent-bar" style="width:'+(100*s.count/top5[0].count)+'%;background:var(--brand)"></div></div>' +
+      '<div class="agent-val">'+fmtInt(s.count)+'</div></div>';
+  }).join('');
+
+  // subject x channel table (top 6)
+  var rows = p.top_sub.slice(0,6);
+  var thead = '<tr><th>Detail Subcategory</th><th>Email</th><th>WhatsApp</th><th>Voice</th><th>Total</th><th>% of Total</th></tr>';
+  var tbody = rows.map(function(s){
+    return '<tr><td class="strong">'+escapeHtml(s.name)+'</td>' +
+      '<td>'+(s.channels['Email']||0)+'</td><td>'+(s.channels['Whatsapp']||0)+'</td><td>'+(s.channels['Voice']||0)+'</td>' +
+      '<td class="strong">'+s.count+'</td><td>'+fmt1(s.pct)+'%</td></tr>';
+  }).join('');
+  document.getElementById('subjectChannelTable').innerHTML = thead+tbody;
+}
+function statTile(k,v,d){
+  return '<div class="stat-tile"><span class="k">'+k+'</span><div class="v">'+v+'</div><div class="d">'+d+'</div></div>';
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+}
+
+/* ---------------------------------------------------------------------- */
+/* 6. RENDER: CONTACT VOLUME TREND                                         */
+/* ---------------------------------------------------------------------- */
+function isoWeekKey(dateStr){
+  var d = new Date(dateStr+'T00:00:00');
+  var day = (d.getUTCDay()+6)%7;
+  d.setUTCDate(d.getUTCDate()-day+3);
+  var firstThu = new Date(Date.UTC(d.getUTCFullYear(),0,4));
+  var week = 1 + Math.round(((d-firstThu)/86400000 - 3 + ((firstThu.getUTCDay()+6)%7))/7);
+  return d.getUTCFullYear()+'-W'+(week<10?'0':'')+week;
+}
+function aggregateWeekly(daily){
+  var map = {}, order = [];
+  daily.forEach(function(d){
+    var wk = isoWeekKey(d.date);
+    if(!map[wk]){ map[wk] = {date:wk,total:0,email:0,whatsapp:0,voice:0}; order.push(wk); }
+    map[wk].total += d.total; map[wk].email += d.email; map[wk].whatsapp += d.whatsapp; map[wk].voice += d.voice;
+  });
+  return order.map(function(k){ return map[k]; });
+}
+function shortDate(iso){
+  var d = new Date(iso+'T00:00:00');
+  return d.getDate()+'/'+(d.getMonth()+1);
+}
+var volumeGeom = null;
+function renderVolumeTrend(p){
+  var titleEl = document.getElementById('volumeChartTitle');
+  var tagEl = document.getElementById('volumeChartTag');
+  var canvas = document.getElementById('volumeChart');
+  var answerRate = p.call.answer_rate/100, abandonRate = p.call.abandon_rate/100;
+  var labels, incoming;
+  if(state.gran === 'monthly'){
+    titleEl.textContent = 'Monthly Contact Volume (Jan–Agu 2026)';
+    labels = MONTHS.map(function(m){ return DATA.periods[m].abbr; });
+    incoming = MONTHS.map(function(m){ return DATA.periods[m].total; });
+    tagEl.textContent = 'Full Year View';
+  } else if(state.gran === 'weekly'){
+    var wk = aggregateWeekly(p.daily);
+    titleEl.textContent = 'Weekly Contact Volume — '+monthLabel(p.month);
+    labels = wk.map(function(w,i){ return 'W'+(i+1); });
+    incoming = wk.map(function(w){ return w.total; });
+    tagEl.textContent = wk.length+' minggu';
+  } else {
+    titleEl.textContent = 'Daily Contact Volume — '+monthLabel(p.month);
+    labels = p.daily.map(function(d){ return shortDate(d.date); });
+    incoming = p.daily.map(function(d){ return d.total; });
+    tagEl.textContent = p.daily.length+' hari';
+  }
+  var answered = incoming.map(function(v){ return Math.round(v*answerRate); });
+  var abandoned = incoming.map(function(v){ return Math.round(v*abandonRate); });
+
+  var barColor = css('--brand'), lineColor = css('--good'), abColor = css('--critical');
+  var bars = [{ data:incoming, color: hexA(barColor,0.85), label:'Incoming Contacts' }];
+  var lines = [{ data:answered, color:lineColor, label:'Answered Contacts' }];
+  if(abandoned.some(function(v){return v>0;})) lines.push({ data:abandoned, color:abColor, label:'Abandoned Contacts' });
+
+  volumeGeom = drawCombo(canvas, { labels:labels, bars:bars, lines:lines });
+  attachComboTooltip(canvas, document.getElementById('volumeTooltip'), function(){return volumeGeom;}, labels,
+    function(){ return bars.concat(lines); }, function(v){ return fmtInt(v); });
+
+  renderLegend(document.getElementById('volumeLegend'), bars.concat(lines).map(function(s){ return {color:s.color.replace(/rgba?\([^)]+\)/, s.color), label:s.label}; }));
+
+  // peak stats
+  document.getElementById('peakHourStat').textContent = (p.peak_hour<10?'0':'')+p.peak_hour+':00';
+  document.getElementById('peakDayStat').textContent = p.peak_day ? new Date(p.peak_day+'T00:00:00').toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+  document.getElementById('peakDayCount').textContent = fmtInt(p.peak_day_count)+' tiket dalam sehari';
+
+  // interval chart (hour distribution)
+  var hourLabels = Array.from({length:24}, function(_,h){ return (h<10?'0':'')+h; });
+  var intervalGeom = null;
+  function drawInterval(){
+    intervalGeom = drawCombo(document.getElementById('intervalChart'), {
+      labels: hourLabels, bars:[{data:p.hour_dist, color:css('--cyan'), label:'Tickets'}], lines:[]
+    });
+  }
+  drawInterval();
+  window.addEventListener('resize', drawInterval);
+  attachComboTooltip(document.getElementById('intervalChart'), document.getElementById('intervalTooltip'), function(){return intervalGeom;},
+    hourLabels, function(){ return [{data:p.hour_dist,color:css('--cyan'),label:'Tickets'}]; }, function(v){return fmtInt(v);});
+
+  // spike note
+  var mean = incoming.reduce(function(a,b){return a+b;},0)/Math.max(incoming.length,1);
+  var maxV = Math.max.apply(null, incoming);
+  var maxIdx = incoming.indexOf(maxV);
+  if(maxV > mean*1.6 && incoming.length>2){
+    var ratio = maxV/Math.max(mean,1);
+    var magPhrase = ratio>=3 ? ('sekitar '+fmt1(ratio)+'x lipat dari rata-rata') : (fmt1((ratio-1)*100)+'% di atas rata-rata');
+    document.getElementById('spikeText').textContent = 'Lonjakan signifikan terdeteksi pada '+labels[maxIdx]+': '+fmtInt(maxV)+' kontak, '+magPhrase+' periode ini.';
+  } else {
+    document.getElementById('spikeText').textContent = 'Volume kontak relatif stabil tanpa lonjakan signifikan pada periode ini (puncak '+fmtInt(maxV)+' vs rata-rata '+fmtInt(mean)+').';
+  }
+}
+function hexA(hex, a){
+  // hex may already be rgb()/#hex from css var; try to add alpha via rgba fallback using canvas trick
+  if(hex.indexOf('#')===0){
+    var r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
+  }
+  return hex;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 7. RENDER: SERVICE PERFORMANCE                                          */
+/* ---------------------------------------------------------------------- */
+function bulletRow(name, actual, target, unit, higherBetter, fmt){
+  fmt = fmt || function(v){return fmt1(v)+unit;};
+  var pct = Math.min(100, (actual/Math.max(target*1.3, actual*1.05, 1))*100);
+  var targetPct = Math.min(100, (target/Math.max(target*1.3, actual*1.05, 1))*100);
+  var gap = actual-target;
+  var good = higherBetter ? gap>=0 : gap<=0;
+  var gapLabel = (higherBetter? (gap>=0?'+':'') : (gap<=0?'':'+') ) + fmt1(Math.abs(gap))*0; // placeholder unused
+  var gapText = (gap>=0?'+':'')+fmt1(gap)+unit;
+  var barColor = good ? css('--good') : css('--critical');
+  return '<div class="bullet-row">' +
+    '<div class="bullet-head"><span class="name">'+name+'</span><span class="figs">Actual: <b>'+fmt(actual)+'</b> &nbsp; Target: <b>'+fmt(target)+'</b></span></div>' +
+    '<div class="bullet-track"><div class="bullet-fill" style="width:'+pct+'%;background:'+barColor+'"></div><div class="bullet-target" style="left:'+targetPct+'%"></div></div>' +
+    '<div class="bullet-gap" style="color:'+barColor+'">Gap: '+gapText+' '+(good?'(memenuhi target)':'(di bawah target)')+'</div>' +
+    '</div>';
+}
+function renderServicePerformance(p){
+  var html = '';
+  html += bulletRow('Service Level', p.sl, TARGETS.sl, '%', true);
+  html += bulletRow('Answer Rate', p.call.answer_rate, TARGETS.answer_rate, '%', true);
+  html += bulletRow('Abandonment Rate', p.call.abandon_rate, TARGETS.abandon_rate, '%', false);
+  html += bulletRow('Average Speed of Answer', p.asa, TARGETS.asa, 's', false, function(v){return fmt1(v)+'s';});
+  html += bulletRow('Service Completion Rate', p.scr, TARGETS.scr, '%', true);
+  document.getElementById('serviceBullets').innerHTML = html;
+
+  var blended = (p.sl + p.call.answer_rate + (100-p.call.abandon_rate) + p.scr)/4;
+  var status = blended>=95?'good':blended>=85?'warning':'critical';
+  drawGauge(document.getElementById('slaGaugeWrap'), blended, 100, css(statusColorVar(status)));
+  var gs = document.getElementById('slaGaugeStatus');
+  var st = blended>=95?{t:'HEALTHY'}:blended>=85?{t:'ATTENTION'}:{t:'CRITICAL'};
+  gs.textContent = st.t; gs.style.background = css(statusBgVar(status)); gs.style.color = css(statusColorVar(status));
+}
+
+/* ---------------------------------------------------------------------- */
+/* 8. RENDER: CUSTOMER EXPERIENCE                                          */
+/* ---------------------------------------------------------------------- */
+function statCard(label, value, target, status){
+  var accent = css(statusColorVar(status));
+  return '<div class="stat-tile" style="border-left:3px solid '+accent+'">' +
+    '<span class="k">'+label+'</span><div class="v">'+value+'</div>' +
+    '<div class="d">Target: '+target+'</div></div>';
+}
+function renderCX(p){
+  var html = '';
+  html += statCard('CSAT', fmtPct(p.csat), TARGETS.csat+'%', statusFromAchv(achievement(p.csat,TARGETS.csat,true)));
+  html += statCard('NPS', p.nps, '≥ 45', p.nps>=45?'good':p.nps>=30?'warning':'critical');
+  html += statCard('FCR', fmtPct(p.fcr), TARGETS.fcr+'%', statusFromAchv(achievement(p.fcr,TARGETS.fcr,true)));
+  html += statCard('Complaint Resolution', fmtPct(p.complaint_res===null?DATA.periods.all.complaint_res:p.complaint_res), TARGETS.complaint_res+'%', 'good');
+  html += statCard('Customer Effort Score', p.ces.toFixed(2)+' / 5', '≤ 3.8', p.ces<=3.8?'good':p.ces<=4.2?'warning':'critical');
+  var posRatio = (p.sentiment.Positive||0)/p.total*100;
+  html += statCard('Positive Sentiment', fmt1(posRatio)+'%', '≥ 90%', posRatio>=90?'good':posRatio>=75?'warning':'critical');
+  document.getElementById('cxStats').innerHTML = html;
+
+  var sentItems = [
+    {label:'Positive', value:p.sentiment.Positive||0, color:css('--good')},
+    {label:'Neutral', value:p.sentiment.Neutral||0, color:css('--warning')},
+    {label:'Negative', value:p.sentiment.Negative||0, color:css('--critical')}
+  ];
+  drawDoughnut(document.getElementById('sentimentDoughnut'), sentItems, document.getElementById('sentimentTooltip'));
+  renderLegend(document.getElementById('sentimentLegend'), sentItems.map(function(i){ return {color:i.color, label:i.label+' · '+fmtInt(i.value)}; }));
+
+  // CX trend across 8 months
+  var labels = MONTHS.map(function(m){ return DATA.periods[m].abbr; });
+  var csatSeries = MONTHS.map(function(m){ return DATA.periods[m].csat; });
+  var fcrSeries = MONTHS.map(function(m){ return DATA.periods[m].fcr; });
+  var geom = drawCombo(document.getElementById('cxTrendChart'), {
+    labels:labels, bars:[], lines:[
+      {data:csatSeries, color:css('--brand'), label:'CSAT %'},
+      {data:fcrSeries, color:css('--cyan'), label:'FCR %'}
+    ]
+  });
+  attachComboTooltip(document.getElementById('cxTrendChart'), document.getElementById('cxTooltip'), function(){return geom;}, labels,
+    function(){ return [{data:csatSeries,color:css('--brand'),label:'CSAT %'},{data:fcrSeries,color:css('--cyan'),label:'FCR %'}]; },
+    function(v){ return fmt1(v)+'%'; });
+  renderLegend(document.getElementById('cxLegend'), [{color:css('--brand'),label:'CSAT %'},{color:css('--cyan'),label:'FCR %'}]);
+}
+
+/* ---------------------------------------------------------------------- */
+/* 9. RENDER: OPERATIONAL EFFICIENCY                                       */
+/* ---------------------------------------------------------------------- */
+function renderOps(p){
+  var totalAgents = p.workforce.length;
+  var contactPerAgent = p.total/totalAgents;
+  var workDays = p.month==='all' ? 165 : Math.max(18, Math.round(p.daily.length*0.9));
+  var productivityPerDay = contactPerAgent/workDays;
+  var html = '';
+  html += statCard('AHT', fmtSec(p.avgaht), '≤ '+fmtSec(TARGETS.aht), statusFromAchv(achievement(p.avgaht,TARGETS.aht,false)));
+  html += statCard('Occupancy', fmtPct(p.occupancy), '≈ '+TARGETS.occupancy+'%', p.occupancy>TARGETS.occupancy+8?'warning':'good');
+  html += statCard('Agent Productivity', fmt1(productivityPerDay)+' / agent / hari', '≥ 3.0', productivityPerDay>=3?'good':'warning');
+  html += statCard('Contact per Agent', fmtInt(contactPerAgent)+' tiket', 'Total periode', 'info');
+  html += statCard('ACW (After Call Work)', p.acw_sec+'s', '≤ 30s', p.acw_sec<=30?'good':p.acw_sec<=45?'warning':'critical');
+  html += statCard('Hold Time', p.hold_sec+'s', '≤ 25s', p.hold_sec<=25?'good':p.hold_sec<=40?'warning':'critical');
+  html += statCard('Idle Time', fmtSec(p.idle_sec), '≤ 3m', p.idle_sec<=180?'good':'warning');
+  html += statCard('Schedule Adherence', fmtPct(p.schedule_adherence), '≥ 90%', p.schedule_adherence>=90?'good':'warning');
+  document.getElementById('opsStats').innerHTML = html;
+
+  var labels = MONTHS.map(function(m){ return DATA.periods[m].abbr; });
+  var volSeries = MONTHS.map(function(m){ return DATA.periods[m].total; });
+  var occSeries = MONTHS.map(function(m){ return DATA.periods[m].occupancy; });
+  // scale occupancy (0-100) to volume axis space visually by drawing as secondary normalized line over bar max
+  var maxVol = Math.max.apply(null, volSeries);
+  var occScaled = occSeries.map(function(v){ return (v/100)*maxVol; });
+  var geom = drawCombo(document.getElementById('opsRelChart'), {
+    labels:labels, bars:[{data:volSeries, color:hexA(css('--brand'),0.85), label:'Contact Volume'}],
+    lines:[{data:occScaled, color:css('--gold'), label:'Occupancy (scaled)'}]
+  });
+  attachComboTooltip(document.getElementById('opsRelChart'), document.getElementById('opsTooltip'), function(){return geom;}, labels,
+    function(){ return [{data:volSeries,color:css('--brand'),label:'Contact Volume'}]; }, function(v){return fmtInt(v);});
+  renderLegend(document.getElementById('opsLegend'), [
+    {color:css('--brand'), label:'Contact Volume (tiket)'},
+    {color:css('--gold'), label:'Occupancy % (skala relatif thd volume)'}
+  ]);
+}
+
+/* ---------------------------------------------------------------------- */
+/* 10. RENDER: WORKFORCE                                                   */
+/* ---------------------------------------------------------------------- */
+function renderWorkforce(p){
+  var wf = p.workforce;
+  var total = wf.length;
+  var active = total;
+  var avgOcc = p.occupancy, avgUtil = p.utilization, avgAdh = p.schedule_adherence, avgAtt = p.attendance;
+  var avgProd = wf.reduce(function(a,b){return a+b.tickets;},0)/total;
+  var html = '';
+  html += statTile('Total Agents', total, 'Agent tercatat menangani tiket pada data sistem');
+  html += statTile('Active Agents', active, 'Aktif menangani kontak pada periode ini');
+  html += statTile('Available Agents', active, 'Seluruh agent aktif melayani seluruh channel');
+  html += statTile('Occupancy', fmtPct(avgOcc), 'Target ≈ '+TARGETS.occupancy+'%');
+  html += statTile('Utilization', fmtPct(avgUtil), 'Waktu produktif agent');
+  html += statTile('Attendance', fmtPct(avgAtt), 'Kehadiran terhadap jadwal shift');
+  html += statTile('Schedule Adherence', fmtPct(avgAdh), 'Kepatuhan terhadap jadwal kerja');
+  html += statTile('Agent Productivity', fmtInt(avgProd)+' tiket', 'Rata-rata tiket ditangani / agent');
+  document.getElementById('workforceStats').innerHTML = html;
+  document.getElementById('workforceHeadcountTag').textContent = total+' agent aktif';
+
+  var sorted = wf.slice().sort(function(a,b){ return b.score-a.score; });
+  var maxScore = sorted[0].score;
+  document.getElementById('agentRankingSub').textContent = 'Seluruh '+total+' agent aktif · diurutkan berdasarkan skor gabungan CSAT, QA &amp; Adherence';
+  document.getElementById('topAgents').innerHTML = sorted.map(function(a,i){
+    var barColor = i===0 ? css('--good') : css('--warning');
+    return agentRow(i+1, a, barColor, maxScore);
+  }).join('');
+  var lowest = sorted[sorted.length-1];
+  var highest = sorted[0];
+  document.getElementById('coachingNote').innerHTML = '<b>🎯 Fokus Coaching:</b> '+escapeHtml(lowest.name)+' berada di peringkat terendah (skor '+fmt1(lowest.score)+' vs '+escapeHtml(highest.name)+' '+fmt1(highest.score)+'), terutama pada '+(lowest.qa<highest.qa?'QA Score ('+fmt1(lowest.qa)+'%)':'CSAT ('+fmt1(lowest.csat)+'%)')+'. Dengan hanya '+total+' agent aktif menangani seluruh '+fmtInt(p.total)+' kontak periode ini ('+fmtInt(p.total/total)+' tiket/agent), disarankan coaching terarah sekaligus evaluasi kebutuhan penambahan kapasitas tim.';
+}
+function agentRow(rank, a, barColor, maxScore){
+  return '<div class="agent-row"><div class="agent-rank">'+rank+'</div>' +
+    '<div class="agent-info"><div class="agent-name">'+escapeHtml(a.name)+'</div><div class="agent-role">'+escapeHtml(a.role)+' · '+a.tickets+' tiket</div></div>' +
+    '<div class="agent-bar-wrap"><div class="agent-bar" style="width:'+(100*a.score/maxScore)+'%;background:'+barColor+'"></div></div>' +
+    '<div class="agent-val">'+fmt1(a.score)+'</div></div>';
+}
+
+/* ---------------------------------------------------------------------- */
+/* 11. RENDER: QUALITY                                                     */
+/* ---------------------------------------------------------------------- */
+function renderQuality(p){
+  var status = p.qa_score>=90?'good':p.qa_score>=80?'warning':'critical';
+  drawGauge(document.getElementById('qaGaugeWrap'), p.qa_score, 100, css(statusColorVar(status)));
+  var gs = document.getElementById('qaGaugeStatus');
+  var st = p.qa_score>=90?'HEALTHY':p.qa_score>=80?'ATTENTION':'CRITICAL';
+  gs.textContent = st; gs.style.background = css(statusBgVar(status)); gs.style.color = css(statusColorVar(status));
+
+  var html = '';
+  html += statCard('Critical Error Rate', fmt1(p.critical_error_rate)+'%', '≤ 2%', p.critical_error_rate<=2?'good':p.critical_error_rate<=3.5?'warning':'critical');
+  html += statCard('Compliance Score', fmt1(p.compliance_score)+'%', '≥ 92%', p.compliance_score>=92?'good':'warning');
+  html += statCard('Call Monitoring Count', fmtInt(p.call_monitoring_count), 'sesi/bulan', 'info');
+  html += statCard('Coaching Completion', fmt1(p.coaching_completion)+'%', '≥ 90%', p.coaching_completion>=90?'good':'warning');
+  html += statCard('Repeat Error Rate', fmt1(p.repeat_error_rate)+'%', '≤ 5%', p.repeat_error_rate<=5?'good':'warning');
+  html += statCard('QA Score', fmtPct(p.qa_score), TARGETS.qa_score+'%', statusFromAchv(achievement(p.qa_score,TARGETS.qa_score,true)));
+  document.getElementById('qualityStats').innerHTML = html;
+
+  var labels = MONTHS.map(function(m){ return DATA.periods[m].abbr; });
+  var qaSeries = MONTHS.map(function(m){ return DATA.periods[m].qa_score; });
+  var geom = drawCombo(document.getElementById('qualityTrendChart'), { labels:labels, bars:[], lines:[{data:qaSeries,color:css('--brand'),label:'QA Score'}] });
+  attachComboTooltip(document.getElementById('qualityTrendChart'), document.getElementById('qualityTooltip'), function(){return geom;}, labels,
+    function(){ return [{data:qaSeries,color:css('--brand'),label:'QA Score'}]; }, function(v){return fmt1(v)+'%';});
+}
+
+/* ---------------------------------------------------------------------- */
+/* 12. RENDER: TOP CONTACT REASONS (PARETO)                                */
+/* ---------------------------------------------------------------------- */
+function renderPareto(p){
+  var items = p.top_cat.slice(0,8);
+  var total = p.total;
+  var cum = 0;
+  var maxV = items[0] ? items[0].count : 1;
+  var html = items.map(function(it, i){
+    cum += it.pct;
+    var trendArrow = i<2 ? '▲' : (i>=items.length-2? '▼':'—');
+    return '<div class="pareto-row">' +
+      '<div class="pareto-label" title="'+escapeHtml(it.name)+'">'+(i+1)+'. '+escapeHtml(it.name)+'</div>' +
+      '<div class="pareto-track"><div class="pareto-fill" style="width:'+(100*it.count/maxV)+'%"></div></div>' +
+      '<div class="pareto-val">'+fmtInt(it.count)+' tiket · '+fmt1(it.pct)+'%</div>' +
+      '<div class="pareto-cum">Σ '+fmt1(cum)+'%</div>' +
+      '</div>';
+  }).join('');
+  document.getElementById('paretoList').innerHTML = html;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 13. RENDER: MANAGEMENT ATTENTION / ALERTS                               */
+/* ---------------------------------------------------------------------- */
+function renderAlerts(p, prev, kpiList){
+  var alerts = [];
+  kpiList.forEach(function(k){
+    if(k.key==='volume') return;
+    var hasTrend = !(k.trend===null || k.trend===undefined || isNaN(k.trend));
+    var magnitude = hasTrend ? Math.abs(k.trend) : 0;
+    var worsening = hasTrend && (k.higherBetter ? k.trend < -0.5 : k.trend > 0.5);
+    var improving = hasTrend && (k.higherBetter ? k.trend > 0.5 : k.trend < -0.5);
+    var trendPhrase = hasTrend ? (' ('+(k.trend>0?'+':'')+fmt1(k.trend)+(k.trendUnit==='pp'?'pp':'%')+' vs periode lalu)') : '';
+    if(k.status === 'critical'){
+      alerts.push({ sev:'critical', text: '<b>'+k.label+'</b> di bawah target: saat ini '+k.value+' terhadap target '+k.target+trendPhrase+'.' });
+    } else if(k.status === 'warning'){
+      alerts.push({ sev:'warning', text: '<b>'+k.label+'</b> memerlukan perhatian: '+k.value+' terhadap target '+k.target+trendPhrase+'.' });
+    } else if(improving && magnitude>=2){
+      alerts.push({ sev:'good', text: '<b>'+k.label+'</b> membaik'+trendPhrase+', kini '+k.value+' (target '+k.target+').' });
+    }
+  });
+  var order = {critical:0, warning:1, good:2};
+  alerts.sort(function(a,b){ return order[a.sev]-order[b.sev]; });
+  if(alerts.length===0){ alerts.push({sev:'good', text:'Seluruh indikator KPI berada pada atau di atas target pada periode ini.'}); }
+  var icon = {critical:'🔴', warning:'🟠', good:'🟢'};
+  document.getElementById('alertsList').innerHTML = alerts.slice(0,8).map(function(a){
+    return '<div class="alert-item"><span class="alert-dot" style="background:'+css(statusColorVar(a.sev))+'"></span>' +
+      '<div class="alert-text">'+icon[a.sev]+' '+a.text+'</div></div>';
+  }).join('');
+}
+
+/* ---------------------------------------------------------------------- */
+/* 14. RENDER: INSIGHTS & ACTIONS                                          */
+/* ---------------------------------------------------------------------- */
+function renderInsightsActions(p, prev, kpiList){
+  var insights = [];
+  if(prev){
+    var volChange = (p.total-prev.total)/prev.total*100;
+    if(Math.abs(volChange)>=3){
+      insights.push('Volume kontak '+(volChange>0?'meningkat':'menurun')+' <b>'+fmt1(Math.abs(volChange))+'%</b> dibanding '+prev.name+', didorong terutama oleh channel '+topChannel(p)+'.');
+    }
+    var slChange = p.sl-prev.sl;
+    if(Math.abs(slChange)>=2){
+      insights.push('Service Level '+(slChange>0?'membaik':'menurun')+' <b>'+fmt1(Math.abs(slChange))+'pp</b> menjadi '+fmtPct(p.sl)+', '+(slChange<0?'sejalan dengan peningkatan traffic pada jam sibuk.':'menandakan efektivitas penambahan kapasitas respons.'));
+    }
+    var ahtChange = (p.avgaht-prev.avgaht)/prev.avgaht*100;
+    if(Math.abs(ahtChange)>=5){
+      insights.push('AHT '+(ahtChange<0?'membaik':'memburuk')+' <b>'+fmt1(Math.abs(ahtChange))+'%</b> menjadi '+fmtSec(p.avgaht)+', mengindikasikan '+(ahtChange<0?'produktivitas agent yang meningkat':'kompleksitas tiket yang meningkat')+'.');
+    }
+  }
+  var csatNote = p.csat>=TARGETS.csat ? 'tetap sehat di <b>'+fmtPct(p.csat)+'</b> meski volume kontak bervariasi' : 'berada di <b>'+fmtPct(p.csat)+'</b>, sedikit di bawah target '+TARGETS.csat+'%';
+  insights.push('CSAT '+csatNote+', didukung oleh sentimen layanan yang didominasi positif ('+fmt1(100*(p.sentiment.Positive||0)/p.total)+'%).');
+  if(p.occupancy > TARGETS.occupancy+8){
+    insights.push('Occupancy agent mencapai <b>'+fmtPct(p.occupancy)+'</b>, jauh di atas target '+TARGETS.occupancy+'% — mengindikasikan kebutuhan tambahan kapasitas agent pada jam sibuk (puncak pukul '+(p.peak_hour<10?'0':'')+p.peak_hour+':00).');
+  } else {
+    insights.push('Kapasitas agent pada periode ini berada pada level terkelola (<b>'+fmtPct(p.occupancy)+'</b> occupancy) terhadap volume '+fmtInt(p.total)+' kontak.');
+  }
+  insights.push('Kategori "'+p.top_cat[0].name+'" mendominasi '+fmt1(p.top_cat[0].pct)+'% dari seluruh kontak, menandakan peluang perluasan self-service atau FAQ digital.');
+
+  document.getElementById('insightsList').innerHTML = insights.slice(0,5).map(function(t,i){
+    return '<div class="insight-card"><div class="insight-num">'+(i+1)+'</div><p>'+t+'</p></div>';
+  }).join('');
+
+  var actions = [];
+  if(p.occupancy > TARGETS.occupancy+5) actions.push('Tambah kapasitas agent atau jadwalkan shift tambahan pada jam puncak pukul '+(p.peak_hour<10?'0':'')+p.peak_hour+':00 untuk menurunkan tekanan occupancy.');
+  if(p.avgaht > TARGETS.aht) actions.push('Perkuat knowledge management dan template respons untuk kategori dominan guna menurunkan AHT menuju target '+fmtSec(TARGETS.aht)+'.');
+  var lowestAgent = p.workforce.slice().sort(function(a,b){return a.score-b.score;})[0];
+  actions.push('Lakukan coaching terarah untuk '+lowestAgent.name+' (skor performa terendah saat ini) guna meningkatkan konsistensi QA dan CSAT, mengingat seluruh volume kontak hanya ditangani oleh '+p.workforce.length+' agent aktif.');
+  actions.push('Analisis lebih lanjut kategori kontak volume tinggi ("'+p.top_cat[0].name+'") untuk peluang otomatisasi atau FAQ mandiri.');
+  actions.push('Perkuat kanal self-service dan digital (WhatsApp bot/FAQ) untuk menekan Wait Time dan menjaga Service Level tetap di atas '+TARGETS.sl+'%.');
+  document.getElementById('actionsList').innerHTML = actions.slice(0,5).map(function(t,i){
+    return '<div class="insight-card"><div class="insight-num">'+(i+1)+'</div><p>'+t+'</p></div>';
+  }).join('');
+}
+function topChannel(p){
+  var best = Object.keys(p.channels).reduce(function(a,b){ return p.channels[a].count>p.channels[b].count?a:b; });
+  return CH_LABEL[best.toLowerCase()] || best;
+}
+
+/* ---------------------------------------------------------------------- */
+/* 15. MASTER RENDER                                                       */
+/* ---------------------------------------------------------------------- */
+function renderAll(){
+  var p = periodOf(state.month);
+  var prev = prevOf(state.month);
+  document.getElementById('metaPeriod').textContent = monthLabel(state.month);
+  document.getElementById('metaUpdated').textContent = DATA.meta.last_updated;
+  document.getElementById('footRange').textContent = DATA.meta.period_label + ' · Data sumber: ' + fmtInt(DATA.periods.all.total) + ' tiket omnichannel';
+
+  var kpiList = renderKPICards(p, prev);
+  renderExecSummary(p, prev, kpiList);
+  renderVolumeTrend(p);
+  renderServicePerformance(p);
+  renderCX(p);
+  renderOps(p);
+  renderWorkforce(p);
+  renderQuality(p);
+  renderPareto(p);
+  renderAlerts(p, prev, kpiList);
+  renderInsightsActions(p, prev, kpiList);
+}
+
+/* ---------------------------------------------------------------------- */
+/* 16. INIT / EVENTS                                                       */
+/* ---------------------------------------------------------------------- */
+function buildMonthSeg(){
+  var seg = document.getElementById('monthSeg');
+  var buttons = MONTHS.map(function(m){
+    return '<button data-month="'+m+'">'+DATA.periods[m].abbr+'</button>';
+  }).join('') + '<button data-month="all" class="active">YTD</button>';
+  seg.innerHTML = buttons;
+  seg.querySelectorAll('button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      seg.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.month = btn.getAttribute('data-month');
+      if(state.month === 'all' && state.gran !== 'monthly'){
+        state.gran = 'monthly';
+        syncGranButtons();
+      } else if(state.month !== 'all' && state.gran === 'monthly'){
+        state.gran = 'daily';
+        syncGranButtons();
+      }
+      renderAll();
+    });
+  });
+}
+function syncGranButtons(){
+  var seg = document.getElementById('granSeg');
+  seg.querySelectorAll('button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-gran') === state.gran);
+  });
+}
+function buildGranSeg(){
+  var seg = document.getElementById('granSeg');
+  seg.querySelectorAll('button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      seg.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.gran = btn.getAttribute('data-gran');
+      renderVolumeTrend(periodOf(state.month));
+    });
+  });
+}
+
+buildMonthSeg();
+buildGranSeg();
+renderAll();
+
+})();
+
+</script>
+</body>
+</html>
